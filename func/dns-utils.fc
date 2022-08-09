@@ -69,26 +69,17 @@ int check_domain_string(slice domain) {
 }
 
 (int, int) get_min_price_config(int domain_char_count) {
+    if (domain_char_count == 1) {
+        return (2999, 299);
+    }
+    if (domain_char_count == 2) {
+        return (999, 99);
+    }
+    if (domain_char_count == 3) {
+        return (249, 25);
+    }
     if (domain_char_count == 4) {
-        return (1000, 100);
-    }
-    if (domain_char_count == 5) {
-        return (500, 50);
-    }
-    if (domain_char_count == 6) {
-        return (400, 40);
-    }
-    if (domain_char_count == 7) {
-        return (300, 30);
-    }
-    if (domain_char_count == 8) {
-        return (200, 20);
-    }
-    if (domain_char_count == 9) {
-        return (100, 10);
-    }
-    if (domain_char_count == 10) {
-        return (50, 5);
+        return (49, 5);
     }
     return (10, 1);
 }
