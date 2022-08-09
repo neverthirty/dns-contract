@@ -88,32 +88,21 @@ PROGRAM{
         s0 s2 XCHG	//  len i domain
         8 LDU	//  len i char domain
         OVER	//  len i char domain char
-        45 EQINT	//  len i char domain is_hyphen
-        s3 PUSH	//  len i char domain is_hyphen i
-        0 GTINT	//  len i char domain is_hyphen _18
-        AND	//  len i char domain _19
-        s4 PUSH	//  len i char domain _19 len
-        -8 ADDCONST	//  len i char domain _19 _21
-        s4 s(-1) PUXC	//  len i char domain _19 i _21
-        LESS	//  len i char domain _19 _22
-        AND	//  len i char domain _23
-        s2 PUSH	//  len i char domain _23 char
-        47 GTINT	//  len i char domain _23 _25
-        s3 PUSH	//  len i char domain _23 _25 char
-        58 LESSINT	//  len i char domain _23 _25 _27
-        AND	//  len i char domain _23 _28
-        OR	//  len i char domain _29
-        s2 PUSH	//  len i char domain _29 char
-        96 GTINT	//  len i char domain _29 _31
-        s0 s3 XCHG	//  len i _31 domain _29 char
-        123 LESSINT	//  len i _31 domain _29 _33
-        s1 s3 XCHG	//  len i _29 domain _31 _33
-        AND	//  len i _29 domain _34
-        s1 s2 XCHG	//  len i domain _29 _34
+        47 GTINT	//  len i char domain _15
+        s2 PUSH	//  len i char domain _15 char
+        58 LESSINT	//  len i char domain _15 _17
+        AND	//  len i char domain _18
+        s2 PUSH	//  len i char domain _18 char
+        96 GTINT	//  len i char domain _18 _20
+        s0 s3 XCHG	//  len i _20 domain _18 char
+        123 LESSINT	//  len i _20 domain _18 _22
+        s1 s3 XCHG	//  len i _18 domain _20 _22
+        AND	//  len i _18 domain _23
+        s1 s2 XCHG	//  len i domain _18 _23
         OR	//  len i domain valid_char
         NOT	//  len i domain need_break
         DUP	//  len i domain need_break need_break
-        NOT	//  len i domain need_break _37
+        NOT	//  len i domain need_break _26
         IF:<{	//  len i domain need_break
           s0 s2 XCHG	//  len need_break domain i
           8 ADDCONST	//  len need_break domain i
@@ -123,7 +112,7 @@ PROGRAM{
       }>	//  domain i len need_break
     }>	//  domain i len
     1 2 BLKDROP2	//  i len
-    EQUAL	//  _40
+    EQUAL	//  _29
   }>
   get_min_price_config PROC:<{
     //  domain_char_count

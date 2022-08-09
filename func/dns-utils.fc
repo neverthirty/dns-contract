@@ -57,8 +57,7 @@ int check_domain_string(slice domain) {
         if (~ need_break) {
             int char = domain~load_uint(8);
             ;; we can do it because additional UTF-8 character's octets >= 128 -- https://www.ietf.org/rfc/rfc3629.txt
-            int is_hyphen = (char == 45);
-            int valid_char = (is_hyphen & (i > 0) & (i < len - 8)) | ((char >= 48) & (char <= 57)) | ((char >= 97) & (char <= 122)); ;; '-' or 0-9 or a-z
+            int valid_char = ((char >= 48) & (char <= 57)) | ((char >= 97) & (char <= 122)); ;; '-' or 0-9 or a-z
 
             need_break = ~ valid_char;
             if (~ need_break) {

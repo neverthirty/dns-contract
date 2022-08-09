@@ -112,30 +112,32 @@ funcer({'logVmOps': false, 'logFiftCode': false}, {
             "exit_code": 203
         },
     ]
-        // < 4 chars
+        // 0 chars
         .concat(makeChars('', 200))
-        .concat(makeChars('a', 200))
-        .concat(makeChars('yo', 200))
-        .concat(makeChars('bob', 200))
-        .concat(makeChars('bob', 200))
+        // 1 - 3 chars
+        .concat(makeChars('a', 0))
+        .concat(makeChars('yo', 0))
+        .concat(makeChars('bob', 0))
+        .concat(makeChars('bob', 0))
+
         // 127 chars alicealicealicealicealicealicealicealicealicealicealicealicealicealicealicealicealicealicealicealicealicealicealicealicealiceal
         .concat(makeChars2('alicealicealicealicealicealicealicealicealiceali', 'cealicealicealicealicealicealicealicealicealicealicealicealicealicealicealiceal', 201))
-        // 126 chars alicealicealicealicealicealicealicealicealicealicealicealicealicealicealicealicealicealicealicealicealicealicealicealicealicea
-        .concat(makeChars2('alicealicealicealicealicealicealicealicealiceali', 'cealicealicealicealicealicealicealicealicealicealicealicealicealicealicealicea', 0))
+        // 24 chars 
+        .concat(makeChars('alicealicealicealicealic', 0))
         // 4 chars
         .concat(makeChars('appl', 0))
-        .concat(makeChars('alicealicealicealicealicealicealicealicealicealialicealicealicealicealicsealicelialiclicealealicealiceicealicealicealiceali', 0))
-        .concat(makeChars2('alicealicealicealicealicealicealicealicealicealialicealicealicealicealicsealicelialiclicealealicealiceicealicealicealiceali', 'a', 0))
         // invalid chars
-        .concat(makeChars2('alicealicealicealicealicealicealicealicealiceali', 'cealicealicealicealicealicea$liceaealicealicealicealicealicealicealicealiceal', 203))
-        // invalid chars - hyphen at begin
-        .concat(makeChars2('alicealicealicealicealicealicealicealicealiceali', 'cealicealicealicealicealicealiceaealicealicealicealicealicealicealicealiceal-', 203))
-        // invalid chars - hyphen at end
+        .concat(makeChars('alicealicea$lice', 203))
+        // invalid chars - hyphen
+        .concat(makeChars('alice-', 203))
+        .concat(makeChars('ali-ce', 203))
         .concat(makeChars('-alice', 203))
         // invalid chars - uppercase
         .concat(makeChars('aLice', 203))
         // valid chars
-        .concat(makeChars('abcdefghijklmnopqrstuvwxyz', 0))
+        .concat(makeChars('abcdefghijklmnopqrstuvwx', 0))
+
+
         // MIN PRICES
         .concat(makePrice(4, 0, 1000))
         .concat(makePrice(4, 1 * MONTH, Math.ceil(1000 * Math.pow(0.9, 1))))
