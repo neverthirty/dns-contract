@@ -11,7 +11,7 @@ funcer({'logVmOps': false, 'logFiftCode': false}, {
     'path': './func/',
     'fc': FC_COLLECTION,
     "configParams": {
-        80: [
+        81: [
             'cell', [
                 "uint256->cell", {
                     '38930916800118655128984401856443062677799436388671332167772672007419684920584': [

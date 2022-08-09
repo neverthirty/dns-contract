@@ -136,54 +136,33 @@ PROGRAM{
   get_min_price_config PROC:<{
     //  domain_char_count
     DUP	//  domain_char_count domain_char_count
-    4 EQINT	//  domain_char_count _2
+    1 EQINT	//  domain_char_count _2
     IFJMP:<{	//  domain_char_count
       DROP	// 
-      1000 PUSHINT	//  _3=1000
-      100 PUSHINT	//  _3=1000 _4=100
+      2999 PUSHINT	//  _3=2999
+      299 PUSHINT	//  _3=2999 _4=299
     }>	//  domain_char_count
     DUP	//  domain_char_count domain_char_count
-    5 EQINT	//  domain_char_count _6
+    2 EQINT	//  domain_char_count _6
     IFJMP:<{	//  domain_char_count
       DROP	// 
-      500 PUSHINT	//  _7=500
-      50 PUSHINT	//  _7=500 _8=50
+      999 PUSHINT	//  _7=999
+      99 PUSHINT	//  _7=999 _8=99
     }>	//  domain_char_count
     DUP	//  domain_char_count domain_char_count
-    6 EQINT	//  domain_char_count _10
+    3 EQINT	//  domain_char_count _10
     IFJMP:<{	//  domain_char_count
       DROP	// 
-      400 PUSHINT	//  _11=400
-      40 PUSHINT	//  _11=400 _12=40
+      249 PUSHINT	//  _11=249
+      25 PUSHINT	//  _11=249 _12=25
     }>	//  domain_char_count
-    DUP	//  domain_char_count domain_char_count
-    7 EQINT	//  domain_char_count _14
-    IFJMP:<{	//  domain_char_count
-      DROP	// 
-      300 PUSHINT	//  _15=300
-      30 PUSHINT	//  _15=300 _16=30
-    }>	//  domain_char_count
-    DUP	//  domain_char_count domain_char_count
-    8 EQINT	//  domain_char_count _18
-    IFJMP:<{	//  domain_char_count
-      DROP	// 
-      200 PUSHINT	//  _19=200
-      20 PUSHINT	//  _19=200 _20=20
-    }>	//  domain_char_count
-    DUP	//  domain_char_count domain_char_count
-    9 EQINT	//  domain_char_count _22
-    IFJMP:<{	//  domain_char_count
-      DROP	// 
-      100 PUSHINT	//  _23=100
-      10 PUSHINT	//  _23=100 _24=10
-    }>	//  domain_char_count
-    10 EQINT	//  _26
+    4 EQINT	//  _14
     IFJMP:<{	// 
-      50 PUSHINT	//  _27=50
-      5 PUSHINT	//  _27=50 _28=5
+      49 PUSHINT	//  _15=49
+      5 PUSHINT	//  _15=49 _16=5
     }>	// 
-    10 PUSHINT	//  _29=10
-    1 PUSHINT	//  _29=10 _30=1
+    10 PUSHINT	//  _17=10
+    1 PUSHINT	//  _17=10 _18=1
   }>
   get_min_price PROC:<{
     //  domain_bits_length now_time
@@ -722,7 +701,7 @@ PROGRAM{
       s4 PUSH	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content auction
       ISNULL	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content _230
       413 THROWIFNOT
-      80 PUSHINT	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content _233=80
+      81 PUSHINT	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content _233=81
       CONFIGOPTPARAM	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content _234
       CTOS	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content cs
       LDDICT	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content _362 _361

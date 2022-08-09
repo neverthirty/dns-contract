@@ -19,7 +19,7 @@ funcer({'logVmOps': false, 'logFiftCode': false}, {
     'fc': FC_ITEM,
     'data': makeStorageItemComplete({}),
     "configParams": {
-        80: [
+        81: [
             'cell', [
                 "uint256->cell", {
                     '38930916800118655128984401856443062677799436388671332167772672007419684920584': [
