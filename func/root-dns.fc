@@ -1,7 +1,7 @@
 ;; Root DNS resolver in masterchain
 
-slice load_data() inline {
-    return get_data().begin_parse(); ;; address of ".ton" dns resolver smart contract in basechain
+cell load_data() inline {
+    return get_data().begin_parse().preload_dict(); ;; hashmap with addresses of contracts of root domain zones
 }
 
 (int, cell) dnsresolve(slice subdomain, int category) method_id {
@@ -19,19 +19,20 @@ slice load_data() inline {
     int top_subdomain_bits = get_top_domain_bits(subdomain);
     slice top_subdomain = subdomain~load_bits(top_subdomain_bits);
 
-    slice my_domain = "ton";
-    int my_domain_bits = slice_bits(my_domain);
+    int top_subdomain_hash = slice_hash(top_subdomain);
+    int top_subdomain_bits = slice_bits(top_subdomain);
 
-    if (~ equal_slices(top_subdomain, my_domain)) {
+    (slice next_resolver_addresses, int r) = udict_get?(load_data(), 256, top_subdomain_hash);
+    if (~ r) {
         return (0, null()); ;; domain cannot be resolved
     }
 
     cell result = begin_cell()
             .store_uint(dns_next_resolver_prefix, 16)
-            .store_slice(load_data())
+            .store_slice(next_resolver_addresses)
             .end_cell();
 
-    return (my_domain_bits + (starts_with_zero_byte ? 8 : 0), result);
+    return (top_subdomain_bits + (starts_with_zero_byte ? 8 : 0), result);
 }
 
 () recv_internal(int msg_value, cell in_msg_full, slice in_msg_body) impure {

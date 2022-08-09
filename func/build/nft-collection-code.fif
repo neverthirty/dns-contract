@@ -221,7 +221,7 @@ PROGRAM{
       DIV	//  start_min_price
     }>
   }>
-  load_data PROC:<{
+  load_data PROCINLINE:<{
     // 
     c4 PUSH	//  _1
     CTOS	//  ds
@@ -229,7 +229,7 @@ PROGRAM{
     LDREF	//  _3 _10 _9
     DROP	//  _3 _5
   }>
-  save_data PROC:<{
+  save_data PROCINLINE:<{
     //  content nft_item_code
     SWAP
     NEWC	//  nft_item_code content _2

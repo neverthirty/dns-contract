@@ -205,10 +205,11 @@ PROGRAM{
       DIV	//  start_min_price
     }>
   }>
-  load_data PROC:<{
+  load_data PROCINLINE:<{
     // 
     c4 PUSH	//  _0
     CTOS	//  _1
+    PLDDICT	//  _2
   }>
   dnsresolve PROC:<{
     //  subdomain category
@@ -235,40 +236,44 @@ PROGRAM{
     DUP	//  subdomain starts_with_zero_byte starts_with_zero_byte
     IF:<{	//  subdomain starts_with_zero_byte
       SWAP	//  starts_with_zero_byte subdomain
-      8 LDU	//  starts_with_zero_byte _49 _48
+      8 LDU	//  starts_with_zero_byte _52 _51
       NIP	//  starts_with_zero_byte subdomain
       SWAP	//  subdomain starts_with_zero_byte
     }>	//  subdomain starts_with_zero_byte
     OVER	//  subdomain starts_with_zero_byte subdomain
     get_top_domain_bits CALLDICT	//  subdomain starts_with_zero_byte top_subdomain_bits
     s1 s2 XCHG	//  starts_with_zero_byte subdomain top_subdomain_bits
-    LDSLICEX	//  starts_with_zero_byte _51 _50
+    LDSLICEX	//  starts_with_zero_byte _54 _53
     DROP	//  starts_with_zero_byte top_subdomain
-    x{746f6e} PUSHSLICE	//  starts_with_zero_byte top_subdomain my_domain
-    DUP	//  starts_with_zero_byte top_subdomain my_domain my_domain
-    SBITS	//  starts_with_zero_byte top_subdomain my_domain my_domain_bits
-    -ROT	//  starts_with_zero_byte my_domain_bits top_subdomain my_domain
-    SDEQ	//  starts_with_zero_byte my_domain_bits _32
-    NOT	//  starts_with_zero_byte my_domain_bits _33
-    IFJMP:<{	//  starts_with_zero_byte my_domain_bits
-      2DROP	// 
-      0 PUSHINT	//  _34=0
-      PUSHNULL	//  _34=0 _35
-    }>	//  starts_with_zero_byte my_domain_bits
-    47763 PUSHINT	//  starts_with_zero_byte my_domain_bits _37=47763
-    NEWC	//  starts_with_zero_byte my_domain_bits _37=47763 _38
-    16 STU	//  starts_with_zero_byte my_domain_bits _40
-    load_data INLINECALLDICT	//  starts_with_zero_byte my_domain_bits _40 _41
-    STSLICER	//  starts_with_zero_byte my_domain_bits _42
-    ENDC	//  starts_with_zero_byte my_domain_bits result
-    s0 s2 XCHG	//  result my_domain_bits starts_with_zero_byte
-    IF:<{	//  result my_domain_bits
-      8 PUSHINT	//  result my_domain_bits _44=8
-    }>ELSE<{	//  result my_domain_bits
-      0 PUSHINT	//  result my_domain_bits _44=0
+    DUP	//  starts_with_zero_byte top_subdomain top_subdomain
+    HASHSU	//  starts_with_zero_byte top_subdomain top_subdomain_hash
+    SWAP	//  starts_with_zero_byte top_subdomain_hash top_subdomain
+    SBITS	//  starts_with_zero_byte top_subdomain_hash top_subdomain_bits
+    load_data INLINECALLDICT	//  starts_with_zero_byte top_subdomain_hash top_subdomain_bits _34
+    s1 s2 XCHG
+    8 PUSHPOW2	//  starts_with_zero_byte top_subdomain_bits top_subdomain_hash _34 _35=256
+    DICTUGET
+    NULLSWAPIFNOT	//  starts_with_zero_byte top_subdomain_bits next_resolver_addresses r
+    NOT	//  starts_with_zero_byte top_subdomain_bits next_resolver_addresses _37
+    IFJMP:<{	//  starts_with_zero_byte top_subdomain_bits next_resolver_addresses
+      3 BLKDROP	// 
+      0 PUSHINT	//  _38=0
+      PUSHNULL	//  _38=0 _39
+    }>	//  starts_with_zero_byte top_subdomain_bits next_resolver_addresses
+    47763 PUSHINT	//  starts_with_zero_byte top_subdomain_bits next_resolver_addresses _41=47763
+    NEWC	//  starts_with_zero_byte top_subdomain_bits next_resolver_addresses _41=47763 _42
+    16 STU	//  starts_with_zero_byte top_subdomain_bits next_resolver_addresses _44
+    SWAP	//  starts_with_zero_byte top_subdomain_bits _44 next_resolver_addresses
+    STSLICER	//  starts_with_zero_byte top_subdomain_bits _45
+    ENDC	//  starts_with_zero_byte top_subdomain_bits result
+    s0 s2 XCHG	//  result top_subdomain_bits starts_with_zero_byte
+    IF:<{	//  result top_subdomain_bits
+      8 PUSHINT	//  result top_subdomain_bits _47=8
+    }>ELSE<{	//  result top_subdomain_bits
+      0 PUSHINT	//  result top_subdomain_bits _47=0
     }>
-    ADD	//  result _47
-    SWAP	//  _47 result
+    ADD	//  result _50
+    SWAP	//  _50 result
   }>
   recv_internal PROC:<{
     //  msg_value in_msg_full in_msg_body

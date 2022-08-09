@@ -22,6 +22,7 @@ funcer({'logVmOps': false, 'logFiftCode': false}, {
         },
     ],
     "get_methods": [
+        // .ton domain
         {
             "name": "dnsresolve",
             "args": [
@@ -112,6 +113,8 @@ funcer({'logVmOps': false, 'logFiftCode': false}, {
                 ]
             ]
         },
+
+        // .vip domain
         {
             "name": "dnsresolve",
             "args": [
@@ -119,14 +122,95 @@ funcer({'logVmOps': false, 'logFiftCode': false}, {
                 ['int', '0']
             ],
             "output": [
-                ["int", 0],
-                ["null", 'null']
+                ["int", 3 * 8],
+                ["cell", [
+                    'uint16', DNS_NEXT_RESOLVER_PREFIX,
+                    'address', '0:' + COLLECTION_ADDRESS
+                ],
+                ]
             ]
         },
         {
             "name": "dnsresolve",
             "args": [
-                ['bytes', new TextEncoder().encode('\0vip\0ali$e\0')],
+                ['bytes', new TextEncoder().encode('\0vip\0')],
+                ['int', '0']
+            ],
+            "output": [
+                ["int", 4 * 8],
+                ["cell", [
+                    'uint16', DNS_NEXT_RESOLVER_PREFIX,
+                    'address', '0:' + COLLECTION_ADDRESS
+                ],
+                ]
+            ]
+        },
+        {
+            "name": "dnsresolve",
+            "args": [
+                ['bytes', new TextEncoder().encode('vip\0alice\0')],
+                ['int', '0']
+            ],
+            "output": [
+                ["int", 3 * 8],
+                ["cell", [
+                    'uint16', DNS_NEXT_RESOLVER_PREFIX,
+                    'address', '0:' + COLLECTION_ADDRESS
+                ],
+                ]
+            ]
+        },
+        {
+            "name": "dnsresolve",
+            "args": [
+                ['bytes', new TextEncoder().encode('vip\0alice\0')],
+                ['int', '123']
+            ],
+            "output": [
+                ["int", 3 * 8],
+                ["cell", [
+                    'uint16', DNS_NEXT_RESOLVER_PREFIX,
+                    'address', '0:' + COLLECTION_ADDRESS
+                ],
+                ]
+            ]
+        },
+        {
+            "name": "dnsresolve",
+            "args": [
+                ['bytes', new TextEncoder().encode('\0vip\0alice\0')],
+                ['int', '0']
+            ],
+            "output": [
+                ["int", 4 * 8],
+                ["cell", [
+                    'uint16', DNS_NEXT_RESOLVER_PREFIX,
+                    'address', '0:' + COLLECTION_ADDRESS
+                ],
+                ]
+            ]
+        },
+        {
+            "name": "dnsresolve",
+            "args": [
+                ['bytes', new TextEncoder().encode('\0vip\0alice\0sub')],
+                ['int', '0']
+            ],
+            "output": [
+                ["int", 4 * 8],
+                ["cell", [
+                    'uint16', DNS_NEXT_RESOLVER_PREFIX,
+                    'address', '0:' + COLLECTION_ADDRESS
+                ],
+                ]
+            ]
+        },
+
+        // .vi domain
+        {
+            "name": "dnsresolve",
+            "args": [
+                ['bytes', new TextEncoder().encode('vi\0')],
                 ['int', '0']
             ],
             "output": [
@@ -134,6 +218,19 @@ funcer({'logVmOps': false, 'logFiftCode': false}, {
                 ["null", 'null']
             ]
         },
+        {
+            "name": "dnsresolve",
+            "args": [
+                ['bytes', new TextEncoder().encode('\0vi\0ali$e\0')],
+                ['int', '0']
+            ],
+            "output": [
+                ["int", 0],
+                ["null", 'null']
+            ]
+        },
+
+        // . domain
         {
             "name": "dnsresolve",
             "args": [

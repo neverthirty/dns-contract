@@ -41,7 +41,14 @@ const TON = 1e9;
 
 const makeStorageRoot = ({}) => {
     return [
-        "address", '0:' + COLLECTION_ADDRESS
+        "uint256->cell", { // content
+            '0x4C582BE10F03F0CE99B9C3E21CCA57167EABC1424D326334D25EE785576E20BF': [     // hash of slice("ton")
+                "address", '0:' + COLLECTION_ADDRESS,
+            ],
+            '0x1CD30600A1D4152A6C3C1D2B85D81B6B4E579157596E0B9FC49EC2F08A3A4DFE': [     // hash of slice("vip")
+                "address", '0:' + COLLECTION_ADDRESS,
+            ]
+        },
     ];
 }
 

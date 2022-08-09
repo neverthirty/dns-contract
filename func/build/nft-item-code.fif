@@ -297,7 +297,7 @@ PROGRAM{
     ENDC	//  _17
     c4 POP
   }>
-  send_msg PROC:<{
+  send_msg PROCINLINE:<{
     //  to_address amount op query_id payload send_mode
     0 PUSHINT	//  to_address amount op query_id payload send_mode _7=0
     16 PUSHINT	//  to_address amount op query_id payload send_mode _7=0 _8=16
@@ -327,7 +327,7 @@ PROGRAM{
     SWAP	//  _35 send_mode
     SENDRAWMSG
   }>
-  transfer_ownership PROC:<{
+  transfer_ownership PROCINLINE:<{
     //  my_balance index collection_address owner_address content sender_address query_id in_msg_body fwd_fees domain auction
     s5 POP	//  my_balance index collection_address owner_address content auction query_id in_msg_body fwd_fees domain
     s0 s2 XCHG	//  my_balance index collection_address owner_address content auction query_id domain fwd_fees in_msg_body
