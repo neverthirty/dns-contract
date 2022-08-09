@@ -12,7 +12,7 @@ const makeChars = (text, exitCode = 0) => {
         {
             "time": AUCTION_START_TIME + 1,
             "sender": '0:' + USER_ADDRESS,
-            "amount": 1000 * TON,
+            "amount": 10000 * TON,
             "body": [
                 'uint32', 0,
                 'string', text,
@@ -28,7 +28,7 @@ const makeChars2 = (text1, text2, exitCode = 0) => {
         {
             "time": AUCTION_START_TIME + 1,
             "sender": '0:' + USER_ADDRESS,
-            "amount": 1000 * TON,
+            "amount": 10000 * TON,
             "body": [
                 'uint32', 0,
                 'string', text1,
@@ -139,23 +139,29 @@ funcer({'logVmOps': false, 'logFiftCode': false}, {
 
 
         // MIN PRICES
-        .concat(makePrice(4, 0, 1000))
-        .concat(makePrice(4, 1 * MONTH, Math.ceil(1000 * Math.pow(0.9, 1))))
-        .concat(makePrice(4, 12 * MONTH, Math.ceil(1000 * Math.pow(0.9, 12))))
-        .concat(makePrice(4, 24 * MONTH, 100))
-        .concat(makePrice(5, 0, 500))
-        .concat(makePrice(5, 6 * MONTH, Math.ceil(500 * Math.pow(0.9, 6))))
-        .concat(makePrice(5, 24 * MONTH, 50))
-        .concat(makePrice(6, 0, 400))
-        .concat(makePrice(6, 24 * MONTH, 40))
-        .concat(makePrice(7, 0, 300))
-        .concat(makePrice(7, 24 * MONTH, 30))
-        .concat(makePrice(8, 0, 200))
-        .concat(makePrice(8, 24 * MONTH, 20))
-        .concat(makePrice(9, 0, 100))
-        .concat(makePrice(9, 24 * MONTH, 10))
-        .concat(makePrice(10, 0, 50))
-        .concat(makePrice(10, 24 * MONTH, 5))
+        .concat(makePrice(1, 0, 2999))
+        .concat(makePrice(1, 1 * MONTH, Math.ceil(2999 * Math.pow(0.9, 1))))
+        .concat(makePrice(1, 12 * MONTH, Math.ceil(2999 * Math.pow(0.9, 12))))
+        .concat(makePrice(1, 24 * MONTH, 299))
+        .concat(makePrice(2, 0, 999))
+        .concat(makePrice(2, 6 * MONTH, Math.ceil(999 * Math.pow(0.9, 6))))
+        .concat(makePrice(2, 24 * MONTH, 99))
+        .concat(makePrice(3, 0, 249))
+        .concat(makePrice(3, 24 * MONTH, 25))
+        .concat(makePrice(4, 0, 49))
+        .concat(makePrice(4, 24 * MONTH, 5))
+        .concat(makePrice(5, 0, 10))
+        .concat(makePrice(5, 24 * MONTH, 1))
+        .concat(makePrice(6, 0, 10))
+        .concat(makePrice(6, 24 * MONTH, 1))
+        .concat(makePrice(7, 0, 10))
+        .concat(makePrice(7, 24 * MONTH, 1))
+        .concat(makePrice(8, 0, 10))
+        .concat(makePrice(8, 24 * MONTH, 1))
+        .concat(makePrice(9, 0, 10))
+        .concat(makePrice(9, 24 * MONTH, 1))
+        .concat(makePrice(10, 0, 10))
+        .concat(makePrice(10, 24 * MONTH, 1))
         .concat(makePrice(11, 0, 10))
         .concat(makePrice(11, 24 * MONTH, 1))
         .concat(makePrice(12, 0, 10))
