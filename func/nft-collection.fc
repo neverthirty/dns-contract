@@ -6,6 +6,8 @@
 ;;           nft_item_code:^Cell
 ;;           = Storage;
 
+int min_tons_for_storage() asm "3000000000 PUSHINT"; ;; 3 TON
+
 (slice ,cell, cell) load_data() inline {
     var ds = get_data().begin_parse();
     return (
@@ -48,6 +50,22 @@ slice calculate_nft_item_address(int wc, cell state_init) {
             .store_ref(state_init)
             .store_ref(nft_content);
     send_raw_message(msg.end_cell(), 64); ;; carry all the remaining value of the inbound message, fee deducted from amount
+}
+
+() send_msg(slice to_address, int amount, int op, int query_id, builder payload, int send_mode) impure inline {
+    var msg = begin_cell()
+            .store_uint(0x10, 6) ;; nobounce - int_msg_info$0 ihr_disabled:Bool bounce:Bool bounced:Bool src:MsgAddress -> 010000
+            .store_slice(to_address)
+            .store_coins(amount)
+            .store_uint(0, 1 + 4 + 4 + 64 + 32 + 1 + 1)
+            .store_uint(op, 32)
+            .store_uint(query_id, 64);
+
+    if (~ builder_null?(payload)) {
+        msg = msg.store_builder(payload);
+    }
+
+    send_raw_message(msg.end_cell(), send_mode);
 }
 
 () recv_internal(int msg_value, cell in_msg_full, slice in_msg_body) impure {
@@ -102,7 +120,13 @@ slice calculate_nft_item_address(int wc, cell state_init) {
         return ();
     }
 
-    if (op == op::fill_up) { ;; just fill-up balance
+    if (op == op::fill_up) { ;; fill-up balance
+        int my_balance = pair_first(get_balance());
+        int amount_to_send = my_balance - min_tons_for_storage();
+        if (amount_to_send > 0) {
+            send_msg(owner_address, amount_to_send, op::fill_up, cur_lt(), null(), 0); ;; pay transfer fees separately
+        }
+
         return ();
     }
     throw(0xffff);
