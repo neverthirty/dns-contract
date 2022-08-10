@@ -436,7 +436,7 @@ PROGRAM{
       ADD	//  msg_value collection_address index from_address domain deploy_without_auction content auction_end_time
       s2 PUSH	//  msg_value collection_address index from_address domain deploy_without_auction content auction_end_time deploy_without_auction
       IF:<{	//  msg_value collection_address index from_address domain deploy_without_auction content auction_end_time
-        s6 PUSH	//  msg_value collection_address index from_address domain deploy_without_auction content auction_end_time _83
+        s4 PUSH	//  msg_value collection_address index from_address domain deploy_without_auction content auction_end_time _83
       }>ELSE<{	//  msg_value collection_address index from_address domain deploy_without_auction content auction_end_time
         zero_address CALLDICT	//  msg_value collection_address index from_address domain deploy_without_auction content auction_end_time _83
       }>	//  msg_value collection_address index from_address domain deploy_without_auction content auction_end_time domain_owner_address

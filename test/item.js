@@ -1,6 +1,6 @@
 const {funcer} = require("./funcer");
 const {
-    makeStorageItemNonInit, FC_COLLECTION, DNS_NEXT_RESOLVER_PREFIX,
+    makeStorageItemNonInit, makeStorageItemComplete, FC_COLLECTION, DNS_NEXT_RESOLVER_PREFIX,
     TON, COLLECTION_ADDRESS, OWNER_ADDRESS, USER_ADDRESS, YEAR, FC_ITEM, makeStorageItem, AUCTION_START_TIME,
     AUCTION_START_DURATION,
     MONTH,
@@ -63,6 +63,35 @@ funcer({'logVmOps': false, 'logFiftCode': false}, {
                     'string', 'alice'
                 ],
                 'int1', '0'
+            ],
+            "exit_code": 405
+        },
+        {
+            "time": AUCTION_START_TIME,
+            "sender": '0:' + COLLECTION_ADDRESS,
+            "amount": 1000 * TON,
+            "body": [
+                'Address', '0:' + OWNER_ADDRESS,
+                'cell', [
+                    'string', 'alice'
+                ],
+                'int1', '-1'
+            ],
+            "new_data": makeStorageItemComplete({
+                auctionEndTime: AUCTION_START_TIME + AUCTION_START_DURATION
+            }),
+            "out_msgs": []
+        },
+        { // not from collection address
+            "time": AUCTION_START_TIME,
+            "sender": '0:' + OWNER_ADDRESS,
+            "amount": 1000 * TON,
+            "body": [
+                'Address', '0:' + OWNER_ADDRESS,
+                'cell', [
+                    'string', 'alice'
+                ],
+                'int1', '-1'
             ],
             "exit_code": 405
         },

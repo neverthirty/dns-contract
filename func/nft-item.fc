@@ -139,7 +139,7 @@ cell pack_auction(slice max_bid_address, int max_bid_amount, int auction_end_tim
         int duration = auction_start_duration - (auction_start_duration - auction_end_duration) * months / 12;
 
         int auction_end_time = now() + duration;
-        slice domain_owner_address = deploy_without_auction ? collection_address : zero_address();
+        slice domain_owner_address = deploy_without_auction ? from_address : zero_address();
         cell domain_auction_cell = deploy_without_auction ? null() : pack_auction(from_address, msg_value, auction_end_time);
         
         store_data(index, collection_address, domain_owner_address, content, domain, domain_auction_cell, now());

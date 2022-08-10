@@ -22,13 +22,14 @@ funcer({'logVmOps': false, 'logFiftCode': false}, {
             "exit_code": 0xffff
         },
         {
-            "sender": '0:' + COLLECTION_ADDRESS,
+            "sender": '0:' + OWNER_ADDRESS,
             "amount": 10 * TON,
             "body": [
-                'uint32', 1
+                'uint32', 1,
+                'string', 'bob'
             ],
             // "new_data": storage,
-            "exit_code": 0xffff
+            "exit_code": 0
         },
         {
             "sender": '0:' + COLLECTION_ADDRESS,
@@ -122,5 +123,5 @@ funcer({'logVmOps': false, 'logFiftCode': false}, {
                 ["hashu", '63510023014831555397400702175474279292479092682101742919664604181945239950513']
             ]
         },
-    ],
+    ]
 });
