@@ -20,6 +20,7 @@ const makeInit = (monthFromStart) => {
                 'cell', [
                     'string', 'alice'
                 ],
+                'int1', '0'
             ],
             "new_data": makeStorageItem({
                 auctionEndTime: time + AUCTION_START_DURATION - Math.floor((AUCTION_START_DURATION - AUCTION_END_DURATION) * monthFromStart / 12),
@@ -45,6 +46,7 @@ funcer({'logVmOps': false, 'logFiftCode': false}, {
                 'cell', [
                     'string', 'alice'
                 ],
+                'int1', '0'
             ],
             "new_data": makeStorageItem({
                 auctionEndTime: AUCTION_START_TIME + AUCTION_START_DURATION
@@ -60,6 +62,7 @@ funcer({'logVmOps': false, 'logFiftCode': false}, {
                 'cell', [
                     'string', 'alice'
                 ],
+                'int1', '0'
             ],
             "exit_code": 405
         },

@@ -193,17 +193,19 @@ PROGRAM{
     // 
     c4 PUSH	//  _1
     CTOS	//  ds
-    LDREF	//  _3 ds
-    LDREF	//  _3 _10 _9
-    DROP	//  _3 _5
+    LDMSGADDR	//  _3 ds
+    LDREF	//  _3 _5 ds
+    LDREF	//  _3 _5 _14 _13
+    DROP	//  _3 _5 _7
   }>
   save_data PROCINLINE:<{
-    //  content nft_item_code
-    SWAP
-    NEWC	//  nft_item_code content _2
-    STREF	//  nft_item_code _3
-    STREF	//  _4
-    ENDC	//  _5
+    //  owner_address content nft_item_code
+    NEWC	//  owner_address content nft_item_code _3
+    s0 s3 XCHG2	//  nft_item_code content _3 owner_address
+    STSLICER	//  nft_item_code content _4
+    STREF	//  nft_item_code _5
+    STREF	//  _6
+    ENDC	//  _7
     c4 POP
   }>
   calculate_nft_item_state_init PROC:<{
@@ -275,102 +277,120 @@ PROGRAM{
     IFJMP:<{	//  msg_value in_msg_body cs
       3 BLKDROP	// 
     }>	//  msg_value in_msg_body cs
-    LDMSGADDR	//  msg_value in_msg_body _94 _93
+    LDMSGADDR	//  msg_value in_msg_body _108 _107
     DROP	//  msg_value in_msg_body sender_address
     SWAP	//  msg_value sender_address in_msg_body
     32 LDU	//  msg_value sender_address op in_msg_body
-    load_data INLINECALLDICT	//  msg_value sender_address op in_msg_body _97 _98
-    NIP	//  msg_value sender_address op in_msg_body nft_item_code
-    s2 PUSH	//  msg_value sender_address op in_msg_body nft_item_code op
-    0 EQINT	//  msg_value sender_address op in_msg_body nft_item_code _25
-    IFJMP:<{	//  msg_value sender_address op in_msg_body nft_item_code
-      s2 POP	//  msg_value sender_address nft_item_code in_msg_body
-      NOW	//  msg_value sender_address nft_item_code in_msg_body now_time
+    load_data INLINECALLDICT	//  msg_value sender_address op in_msg_body _111 _112 _113
+    NIP	//  msg_value sender_address op in_msg_body owner_address nft_item_code
+    s3 PUSH	//  msg_value sender_address op in_msg_body owner_address nft_item_code op
+    0 EQINT	//  msg_value sender_address op in_msg_body owner_address nft_item_code _26
+    s4 PUSH	//  msg_value sender_address op in_msg_body owner_address nft_item_code _26 op
+    1 EQINT	//  msg_value sender_address op in_msg_body owner_address nft_item_code _26 _28
+    OR	//  msg_value sender_address op in_msg_body owner_address nft_item_code _29
+    IFJMP:<{	//  msg_value sender_address op in_msg_body owner_address nft_item_code
+      s0 s3 XCHG	//  msg_value sender_address nft_item_code in_msg_body owner_address op
+      1 EQINT	//  msg_value sender_address nft_item_code in_msg_body owner_address deploy_without_auction
+      DUP	//  msg_value sender_address nft_item_code in_msg_body owner_address deploy_without_auction deploy_without_auction
+      IF:<{	//  msg_value sender_address nft_item_code in_msg_body owner_address deploy_without_auction
+        s1 s4 XCPU	//  msg_value sender_address nft_item_code in_msg_body deploy_without_auction owner_address sender_address
+        SDEQ	//  msg_value sender_address nft_item_code in_msg_body deploy_without_auction _34
+        405 THROWIFNOT
+      }>ELSE<{
+        NIP	//  msg_value sender_address nft_item_code in_msg_body deploy_without_auction
+      }>
+      NOW	//  msg_value sender_address nft_item_code in_msg_body deploy_without_auction now_time
       DUP
-      1659171600 PUSHINT	//  msg_value sender_address nft_item_code in_msg_body now_time now_time _29=1659171600
-      GREATER	//  msg_value sender_address nft_item_code in_msg_body now_time _30
+      1659171600 PUSHINT	//  msg_value sender_address nft_item_code in_msg_body deploy_without_auction now_time now_time _39=1659171600
+      GREATER	//  msg_value sender_address nft_item_code in_msg_body deploy_without_auction now_time _40
+      s2 PUSH	//  msg_value sender_address nft_item_code in_msg_body deploy_without_auction now_time _40 deploy_without_auction
+      OR	//  msg_value sender_address nft_item_code in_msg_body deploy_without_auction now_time _41
       199 THROWIFNOT
-      SWAP	//  msg_value sender_address nft_item_code now_time in_msg_body
-      read_domain_from_comment CALLDICT	//  msg_value sender_address nft_item_code now_time domain
-      DUP	//  msg_value sender_address nft_item_code now_time domain domain
-      SBITS	//  msg_value sender_address nft_item_code now_time domain len
-      DUP	//  msg_value sender_address nft_item_code now_time domain len len
-      0 GTINT	//  msg_value sender_address nft_item_code now_time domain len _38
+      s0 s2 XCHG	//  msg_value sender_address nft_item_code now_time deploy_without_auction in_msg_body
+      read_domain_from_comment CALLDICT	//  msg_value sender_address nft_item_code now_time deploy_without_auction domain
+      DUP	//  msg_value sender_address nft_item_code now_time deploy_without_auction domain domain
+      SBITS	//  msg_value sender_address nft_item_code now_time deploy_without_auction domain len
+      DUP	//  msg_value sender_address nft_item_code now_time deploy_without_auction domain len len
+      0 GTINT	//  msg_value sender_address nft_item_code now_time deploy_without_auction domain len _49
       200 THROWIFNOT
       DUP
-      192 PUSHINT	//  msg_value sender_address nft_item_code now_time domain len len _43
-      LEQ	//  msg_value sender_address nft_item_code now_time domain len _44
+      192 PUSHINT	//  msg_value sender_address nft_item_code now_time deploy_without_auction domain len len _54
+      LEQ	//  msg_value sender_address nft_item_code now_time deploy_without_auction domain len _55
       201 THROWIFNOT
       DUP
-      8 PUSHINT	//  msg_value sender_address nft_item_code now_time domain len len _47=8
-      MOD	//  msg_value sender_address nft_item_code now_time domain len _48
-      0 EQINT	//  msg_value sender_address nft_item_code now_time domain len _50
+      8 PUSHINT	//  msg_value sender_address nft_item_code now_time deploy_without_auction domain len len _58=8
+      MOD	//  msg_value sender_address nft_item_code now_time deploy_without_auction domain len _59
+      0 EQINT	//  msg_value sender_address nft_item_code now_time deploy_without_auction domain len _61
       202 THROWIFNOT
-      OVER	//  msg_value sender_address nft_item_code now_time domain len domain
-      check_domain_string CALLDICT	//  msg_value sender_address nft_item_code now_time domain len _53
+      OVER	//  msg_value sender_address nft_item_code now_time deploy_without_auction domain len domain
+      check_domain_string CALLDICT	//  msg_value sender_address nft_item_code now_time deploy_without_auction domain len _64
       203 THROWIFNOT
-      ROT	//  msg_value sender_address nft_item_code domain len now_time
-      get_min_price CALLDICT	//  msg_value sender_address nft_item_code domain min_price
-      s1 s4 XCHG	//  domain sender_address nft_item_code msg_value min_price
-      GEQ	//  domain sender_address nft_item_code _58
+      s0 s3 XCHG2	//  msg_value sender_address nft_item_code domain deploy_without_auction len now_time
+      get_min_price CALLDICT	//  msg_value sender_address nft_item_code domain deploy_without_auction min_price
+      s1 s5 XCHG	//  deploy_without_auction sender_address nft_item_code domain msg_value min_price
+      GEQ	//  deploy_without_auction sender_address nft_item_code domain _69
+      s4 PUSH	//  deploy_without_auction sender_address nft_item_code domain _69 deploy_without_auction
+      OR	//  deploy_without_auction sender_address nft_item_code domain _70
       204 THROWIFNOT
-      s2 PUSH	//  domain sender_address nft_item_code domain
-      HASHSU	//  domain sender_address nft_item_code item_index
-      81 PUSHINT	//  domain sender_address nft_item_code item_index _63=81
-      CONFIGOPTPARAM	//  domain sender_address nft_item_code item_index config_cell
-      DUP	//  domain sender_address nft_item_code item_index config_cell config_cell
-      ISNULL	//  domain sender_address nft_item_code item_index config_cell _65
-      NOT	//  domain sender_address nft_item_code item_index config_cell _66
-      IF:<{	//  domain sender_address nft_item_code item_index config_cell
-        CTOS	//  domain sender_address nft_item_code item_index config_cs
-        LDDICT	//  domain sender_address nft_item_code item_index _100 _99
-        DROP	//  domain sender_address nft_item_code item_index config
+      DUP	//  deploy_without_auction sender_address nft_item_code domain domain
+      HASHSU	//  deploy_without_auction sender_address nft_item_code domain item_index
+      81 PUSHINT	//  deploy_without_auction sender_address nft_item_code domain item_index _75=81
+      CONFIGOPTPARAM	//  deploy_without_auction sender_address nft_item_code domain item_index config_cell
+      DUP	//  deploy_without_auction sender_address nft_item_code domain item_index config_cell config_cell
+      ISNULL	//  deploy_without_auction sender_address nft_item_code domain item_index config_cell _77
+      NOT	//  deploy_without_auction sender_address nft_item_code domain item_index config_cell _78
+      IF:<{	//  deploy_without_auction sender_address nft_item_code domain item_index config_cell
+        CTOS	//  deploy_without_auction sender_address nft_item_code domain item_index config_cs
+        LDDICT	//  deploy_without_auction sender_address nft_item_code domain item_index _115 _114
+        DROP	//  deploy_without_auction sender_address nft_item_code domain item_index config
         s1 s(-1) PUXC
-        8 PUSHPOW2	//  domain sender_address nft_item_code item_index item_index config _74=256
+        8 PUSHPOW2	//  deploy_without_auction sender_address nft_item_code domain item_index item_index config _86=256
         DICTUGET
-        NULLSWAPIFNOT	//  domain sender_address nft_item_code item_index _101 _102
-        NIP	//  domain sender_address nft_item_code item_index found
+        NULLSWAPIFNOT	//  deploy_without_auction sender_address nft_item_code domain item_index _116 _117
+        NIP	//  deploy_without_auction sender_address nft_item_code domain item_index found
         205 THROWIF
       }>ELSE<{
-        DROP	//  domain sender_address nft_item_code item_index
+        DROP	//  deploy_without_auction sender_address nft_item_code domain item_index
       }>
-      NEWC	//  domain sender_address nft_item_code item_index _79
-      s0 s4 XCHG2	//  item_index sender_address nft_item_code _79 domain
-      STSLICER	//  item_index sender_address nft_item_code _80
-      ENDC	//  item_index sender_address nft_item_code _81
-      NEWC	//  item_index sender_address nft_item_code _81 _82
-      s0 s3 XCHG2	//  item_index _81 nft_item_code _82 sender_address
-      STSLICER	//  item_index _81 nft_item_code _83
-      s1 s2 XCHG	//  item_index nft_item_code _81 _83
-      STREF	//  item_index nft_item_code _84
-      ENDC	//  item_index nft_item_code nft_content
+      NEWC
+      ROT	//  deploy_without_auction sender_address nft_item_code item_index _91 domain
+      STSLICER	//  deploy_without_auction sender_address nft_item_code item_index _92
+      ENDC	//  deploy_without_auction sender_address nft_item_code item_index _93
+      NEWC	//  deploy_without_auction sender_address nft_item_code item_index _93 _94
+      s0 s4 XCHG2	//  deploy_without_auction _93 nft_item_code item_index _94 sender_address
+      STSLICER	//  deploy_without_auction _93 nft_item_code item_index _95
+      s1 s3 XCHG	//  deploy_without_auction item_index nft_item_code _93 _95
+      STREF	//  deploy_without_auction item_index nft_item_code _96
+      s1 s3 XCHG	//  nft_item_code item_index deploy_without_auction _96
+      1 STI	//  nft_item_code item_index _98
+      ENDC	//  nft_item_code item_index nft_content
+      s1 s2 XCHG	//  item_index nft_item_code nft_content
       deploy_nft_item CALLDICT
-    }>	//  msg_value sender_address op in_msg_body nft_item_code
-    s2 s4 XCHG
-    4 BLKDROP	//  op
-    923790417 PUSHINT	//  op _87=923790417
-    EQUAL	//  _88
+    }>	//  msg_value sender_address op in_msg_body owner_address nft_item_code
+    s3 s5 XCHG
+    5 BLKDROP	//  op
+    923790417 PUSHINT	//  op _101=923790417
+    EQUAL	//  _102
     IFJMP:<{	// 
     }>	// 
-    16 PUSHPOW2DEC	//  _89=65535
+    16 PUSHPOW2DEC	//  _103=65535
     THROWANY
   }>
   get_collection_data PROC:<{
     // 
-    load_data INLINECALLDICT	//  _5 _6
-    DROP	//  content
-    -1 PUSHINT	//  content _3=-1
-    zero_address CALLDICT	//  content _3=-1 _4
-    s1 s2 XCHG	//  _3=-1 content _4
+    load_data INLINECALLDICT	//  _5 _6 _7
+    DROP	//  owner_address content
+    -1 PUSHINT	//  owner_address content _4=-1
+    s0 s2 XCHG	//  _4=-1 content owner_address
   }>
   get_nft_address_by_index PROC:<{
     //  index
-    load_data INLINECALLDICT	//  index _8 _9
-    NIP	//  index nft_item_code
+    load_data INLINECALLDICT	//  index _9 _10 _11
+    2 1 BLKDROP2	//  index nft_item_code
     calculate_nft_item_state_init CALLDICT	//  state_init
-    0 PUSHINT	//  state_init _6
-    SWAP	//  _6 state_init
-    calculate_nft_item_address CALLDICT	//  _7
+    0 PUSHINT	//  state_init _7
+    SWAP	//  _7 state_init
+    calculate_nft_item_address CALLDICT	//  _8
   }>
   get_nft_content PROC:<{
     //  index individual_nft_content

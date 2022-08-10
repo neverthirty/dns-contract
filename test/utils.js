@@ -54,6 +54,7 @@ const makeStorageRoot = ({}) => {
 
 const makeStorageCollection = ({}) => {
     return [
+        "Address", '0:' + OWNER_ADDRESS, // owner_address
         "cell", [ // content
             'uint8', 1,
             'string', 'https://ton.org/collection.json'

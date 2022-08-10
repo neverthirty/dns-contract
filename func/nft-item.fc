@@ -127,6 +127,7 @@ cell pack_auction(slice max_bid_address, int max_bid_amount, int auction_end_tim
         throw_unless(405, equal_slices(collection_address, sender_address));
         slice from_address = in_msg_body~load_msg_addr();
         cell domain = in_msg_body~load_ref();
+        int deploy_without_auction = in_msg_body~load_int(1);
 
         cell content = begin_cell().store_uint(0, 8).store_dict(new_dict()).end_cell();
 
@@ -138,7 +139,10 @@ cell pack_auction(slice max_bid_address, int max_bid_amount, int auction_end_tim
         int duration = auction_start_duration - (auction_start_duration - auction_end_duration) * months / 12;
 
         int auction_end_time = now() + duration;
-        store_data(index, collection_address, zero_address(), content, domain, pack_auction(from_address, msg_value, auction_end_time), now());
+        slice domain_owner_address = deploy_without_auction ? collection_address : zero_address();
+        cell domain_auction_cell = deploy_without_auction ? null() : pack_auction(from_address, msg_value, auction_end_time);
+        
+        store_data(index, collection_address, domain_owner_address, content, domain, domain_auction_cell, now());
         return ();
     }
 
