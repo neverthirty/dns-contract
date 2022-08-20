@@ -229,14 +229,11 @@ cell pack_auction(slice max_bid_address, int max_bid_amount, int auction_end_tim
     }
     if (op == op::process_governance_decision) { ;; governance
         throw_unless(413, cell_null?(auction));
-        slice cs = config_param(dns_config_id).begin_parse();
-        cell config = cs~load_dict();
-        (slice config_value, int found) = config.udict_get?(256, index);
-        throw_unless(415, found);
-        int config_op = config_value~load_uint(8);
+        throw_unless(410, equal_slices(sender_address, collection_address));
+        int config_op = in_msg_body~load_uint(2);
         throw_unless(416, (config_op == 0) | (config_op == 1));
         if (config_op == 0) { ;; transfer
-            transfer_ownership(my_balance, index, collection_address, owner_address, content, sender_address, query_id, config_value, fwd_fee, domain, auction);
+            transfer_ownership(my_balance, index, collection_address, owner_address, content, sender_address, query_id, in_msg_body, fwd_fee, domain, auction);
         }
         if (config_op == 1) { ;; destroy
             send_msg(collection_address, 0, op::fill_up, query_id, null(), 128 + 32); ;; carry all the remaining balance + destroy

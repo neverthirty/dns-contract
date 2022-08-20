@@ -382,15 +382,15 @@ PROGRAM{
       4 BLKDROP	// 
     }>	//  msg_value my_balance in_msg_body cs
     LDMSGADDR	//  msg_value my_balance in_msg_body sender_address cs
-    LDMSGADDR	//  msg_value my_balance in_msg_body sender_address _330 _329
+    LDMSGADDR	//  msg_value my_balance in_msg_body sender_address _320 _319
     NIP	//  msg_value my_balance in_msg_body sender_address cs
-    LDVARUINT16	//  msg_value my_balance in_msg_body sender_address _332 _331
+    LDVARUINT16	//  msg_value my_balance in_msg_body sender_address _322 _321
     NIP	//  msg_value my_balance in_msg_body sender_address cs
     1 PUSHINT	//  msg_value my_balance in_msg_body sender_address cs _22=1
     SDSKIPFIRST	//  msg_value my_balance in_msg_body sender_address cs
-    LDVARUINT16	//  msg_value my_balance in_msg_body sender_address _334 _333
+    LDVARUINT16	//  msg_value my_balance in_msg_body sender_address _324 _323
     NIP	//  msg_value my_balance in_msg_body sender_address cs
-    LDVARUINT16	//  msg_value my_balance in_msg_body sender_address _336 _335
+    LDVARUINT16	//  msg_value my_balance in_msg_body sender_address _326 _325
     DROP	//  msg_value my_balance in_msg_body sender_address fwd_fee
     load_data CALLDICT	//  msg_value my_balance in_msg_body sender_address fwd_fee init? index collection_address owner_address content domain auction last_fill_up_time
     s7 PUSH	//  msg_value my_balance in_msg_body sender_address fwd_fee init? index collection_address owner_address content domain auction last_fill_up_time init?
@@ -405,7 +405,7 @@ PROGRAM{
       SWAP	//  msg_value collection_address index in_msg_body
       LDMSGADDR	//  msg_value collection_address index from_address in_msg_body
       LDREF	//  msg_value collection_address index from_address domain in_msg_body
-      1 LDI	//  msg_value collection_address index from_address domain _350 _349
+      1 LDI	//  msg_value collection_address index from_address domain _340 _339
       DROP	//  msg_value collection_address index from_address domain deploy_without_auction
       NEWDICT	//  msg_value collection_address index from_address domain deploy_without_auction _53
       0 PUSHINT	//  msg_value collection_address index from_address domain deploy_without_auction _53 _54=0
@@ -462,7 +462,7 @@ PROGRAM{
     IFJMP:<{	//  msg_value my_balance in_msg_body sender_address fwd_fee last_fill_up_time index collection_address owner_address content domain auction
       s9 s11 XCHG
       11 BLKDROP	//  in_msg_body
-      LDMSGADDR	//  _352 _351
+      LDMSGADDR	//  _342 _341
       DROP	//  from_address
       0 PUSHINT	//  from_address _96=0
       DUP	//  from_address _96=0 _97=0
@@ -648,7 +648,7 @@ PROGRAM{
       SDEQ	//  collection_address owner_address in_msg_body index auction domain _188
       410 THROWIFNOT
       s0 s3 XCHG	//  collection_address owner_address domain index auction in_msg_body
-      LDREF	//  collection_address owner_address domain index auction _361 _360
+      LDREF	//  collection_address owner_address domain index auction _351 _350
       DROP	//  collection_address owner_address domain index auction _190
       s0 s1 s5 XCHG3
       s0 s4 XCHG
@@ -679,11 +679,11 @@ PROGRAM{
       SWAP	//  owner_address has_value index collection_address domain auction key in_msg_body cs _210
       0 EQINT	//  owner_address has_value index collection_address domain auction key in_msg_body cs _214
       412 THROWIFNOT
-      LDDICT	//  owner_address has_value index collection_address domain auction key in_msg_body _367 _366
+      LDDICT	//  owner_address has_value index collection_address domain auction key in_msg_body _357 _356
       DROP	//  owner_address has_value index collection_address domain auction key in_msg_body keyvalue_map
       s0 s7 XCHG	//  owner_address keyvalue_map index collection_address domain auction key in_msg_body has_value
       IF:<{	//  owner_address keyvalue_map index collection_address domain auction key in_msg_body
-        LDREF	//  owner_address keyvalue_map index collection_address domain auction key _369 _368
+        LDREF	//  owner_address keyvalue_map index collection_address domain auction key _359 _358
         DROP	//  owner_address keyvalue_map index collection_address domain auction key value
         s0 s1 s6 XCHG3
         8 PUSHPOW2	//  owner_address auction index collection_address domain value key keyvalue_map _223=256
@@ -692,7 +692,7 @@ PROGRAM{
         DROP	//  owner_address keyvalue_map index collection_address domain auction key
         s0 s5 XCHG2
         8 PUSHPOW2	//  owner_address auction index collection_address domain key keyvalue_map _226=256
-        DICTUDEL	//  owner_address auction index collection_address domain _370 _371
+        DICTUDEL	//  owner_address auction index collection_address domain _360 _361
         DROP	//  owner_address auction index collection_address domain keyvalue_map
       }>
       0 PUSHINT	//  owner_address auction index collection_address domain keyvalue_map _228=0
@@ -705,142 +705,141 @@ PROGRAM{
       NOW	//  index collection_address owner_address content domain auction _234
       store_data CALLDICT
     }>	//  msg_value my_balance in_msg_body sender_address fwd_fee last_fill_up_time index collection_address owner_address content domain auction op query_id
-    s11 POP	//  msg_value my_balance query_id sender_address fwd_fee last_fill_up_time index collection_address owner_address content domain auction op
-    DUP
-    1153347137 PUSHINT	//  msg_value my_balance query_id sender_address fwd_fee last_fill_up_time index collection_address owner_address content domain auction op op _236=1153347137
-    EQUAL	//  msg_value my_balance query_id sender_address fwd_fee last_fill_up_time index collection_address owner_address content domain auction op _237
-    IFJMP:<{	//  msg_value my_balance query_id sender_address fwd_fee last_fill_up_time index collection_address owner_address content domain auction op
-      DROP
-      s6 POP
-      s10 POP	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content
-      s4 PUSH	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content auction
-      ISNULL	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content _239
+    OVER
+    1153347137 PUSHINT	//  msg_value my_balance in_msg_body sender_address fwd_fee last_fill_up_time index collection_address owner_address content domain auction op query_id op _236=1153347137
+    EQUAL	//  msg_value my_balance in_msg_body sender_address fwd_fee last_fill_up_time index collection_address owner_address content domain auction op query_id _237
+    IFJMP:<{	//  msg_value my_balance in_msg_body sender_address fwd_fee last_fill_up_time index collection_address owner_address content domain auction op query_id
+      NIP
+      s7 POP
+      s11 POP	//  auction my_balance in_msg_body sender_address fwd_fee query_id index collection_address owner_address content domain
+      s10 PUSH	//  auction my_balance in_msg_body sender_address fwd_fee query_id index collection_address owner_address content domain auction
+      ISNULL	//  auction my_balance in_msg_body sender_address fwd_fee query_id index collection_address owner_address content domain _239
       413 THROWIFNOT
-      81 PUSHINT	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content _242=81
-      CONFIGOPTPARAM	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content _243
-      CTOS	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content cs
-      LDDICT	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content _373 _372
-      DROP	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content config
-      s4 s(-1) PUXC
-      8 PUSHPOW2	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content index config _250=256
-      DICTUGET
-      NULLSWAPIFNOT	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content config_value found
-      415 THROWIFNOT
-      8 LDU	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content config_op config_value
-      OVER	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content config_op config_value config_op
-      0 EQINT	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content config_op config_value _260
-      s2 PUSH	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content config_op config_value _260 config_op
-      1 EQINT	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content config_op config_value _260 _262
-      OR	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content config_op config_value _263
+      s7 s3 PUSH2	//  auction my_balance in_msg_body sender_address fwd_fee query_id index collection_address owner_address content domain sender_address collection_address
+      SDEQ	//  auction my_balance in_msg_body sender_address fwd_fee query_id index collection_address owner_address content domain _242
+      410 THROWIFNOT
+      s0 s8 XCHG	//  auction my_balance domain sender_address fwd_fee query_id index collection_address owner_address content in_msg_body
+      2 LDU	//  auction my_balance domain sender_address fwd_fee query_id index collection_address owner_address content config_op in_msg_body
+      OVER	//  auction my_balance domain sender_address fwd_fee query_id index collection_address owner_address content config_op in_msg_body config_op
+      0 EQINT	//  auction my_balance domain sender_address fwd_fee query_id index collection_address owner_address content config_op in_msg_body _250
+      s2 PUSH	//  auction my_balance domain sender_address fwd_fee query_id index collection_address owner_address content config_op in_msg_body _250 config_op
+      1 EQINT	//  auction my_balance domain sender_address fwd_fee query_id index collection_address owner_address content config_op in_msg_body _250 _252
+      OR	//  auction my_balance domain sender_address fwd_fee query_id index collection_address owner_address content config_op in_msg_body _253
       416 THROWIFNOT
-      OVER	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content config_op config_value config_op
-      0 EQINT	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content config_op config_value _266
-      IF:<{	//  domain my_balance query_id sender_address fwd_fee auction index collection_address owner_address content config_op config_value
+      OVER	//  auction my_balance domain sender_address fwd_fee query_id index collection_address owner_address content config_op in_msg_body config_op
+      0 EQINT	//  auction my_balance domain sender_address fwd_fee query_id index collection_address owner_address content config_op in_msg_body _256
+      IF:<{	//  auction my_balance domain sender_address fwd_fee query_id index collection_address owner_address content config_op in_msg_body
         s4 PUSH
         s9 s11 XCHG
         s6 s8 XCHG
-        s7 s10 XCPU
+        s7 s0 XCPU
         s5 s7 XCHG
         s4 s6 XCHG
         s5 s12 XCHG
         s3 s1 s4 XCHG3
-        s12 s13 s13 XCHG3	//  collection_address config_op query_id my_balance index collection_address owner_address content sender_address query_id config_value fwd_fee domain auction
+        s12 s11 s13 XCHG3	//  collection_address config_op query_id my_balance index collection_address owner_address content sender_address query_id in_msg_body fwd_fee domain auction
         transfer_ownership INLINECALLDICT
+        s1 s2 XCHG	//  config_op collection_address query_id
       }>ELSE<{
         DROP
-        s3 s10 XCHG
-        s9 POP
-        7 BLKDROP	//  collection_address config_op query_id
+        s10 POP
+        2DROP
+        s6 POP
+        s1 s4 XCHG
+        4 BLKDROP	//  config_op collection_address query_id
       }>
-      SWAP	//  collection_address query_id config_op
-      1 EQINT	//  collection_address query_id _269
-      IF:<{	//  collection_address query_id
-        0 PUSHINT	//  collection_address query_id _270=0
+      s0 s2 XCHG	//  query_id collection_address config_op
+      1 EQINT	//  query_id collection_address _259
+      IF:<{	//  query_id collection_address
+        SWAP
+        0 PUSHINT
         923790417 PUSHINT
         ROT
         PUSHNULL
-        160 PUSHINT	//  collection_address _270=0 _271=923790417 query_id _272 _275
+        160 PUSHINT	//  collection_address _260=0 _261=923790417 query_id _262 _265
         send_msg INLINECALLDICT
       }>ELSE<{
         2DROP	// 
       }>
-    }>	//  msg_value my_balance query_id sender_address fwd_fee last_fill_up_time index collection_address owner_address content domain auction op
-    s8 POP	//  msg_value my_balance query_id sender_address op last_fill_up_time index collection_address owner_address content domain auction
-    s7 PUSH
-    1322339173 PUSHINT	//  msg_value my_balance query_id sender_address op last_fill_up_time index collection_address owner_address content domain auction op _277=1322339173
-    EQUAL	//  msg_value my_balance query_id sender_address op last_fill_up_time index collection_address owner_address content domain auction _278
-    IFJMP:<{	//  msg_value my_balance query_id sender_address op last_fill_up_time index collection_address owner_address content domain auction
-      s7 POP	//  msg_value my_balance query_id sender_address auction last_fill_up_time index collection_address owner_address content domain
-      NOW	//  msg_value my_balance query_id sender_address auction last_fill_up_time index collection_address owner_address content domain _280
-      s0 s6 XCHG2	//  msg_value my_balance query_id sender_address auction domain index collection_address owner_address content _280 last_fill_up_time
-      SUB	//  msg_value my_balance query_id sender_address auction domain index collection_address owner_address content _281
-      31622400 PUSHINT	//  msg_value my_balance query_id sender_address auction domain index collection_address owner_address content _281 _282=31622400
-      GREATER	//  msg_value my_balance query_id sender_address auction domain index collection_address owner_address content _283
-      s0 s6 XCHG	//  msg_value my_balance query_id sender_address _283 domain index collection_address owner_address content auction
-      ISNULL	//  msg_value my_balance query_id sender_address _283 domain index collection_address owner_address content _284
-      s1 s6 XCHG	//  msg_value my_balance query_id sender_address content domain index collection_address owner_address _283 _284
-      AND	//  msg_value my_balance query_id sender_address content domain index collection_address owner_address _285
+    }>	//  msg_value my_balance in_msg_body sender_address fwd_fee last_fill_up_time index collection_address owner_address content domain auction op query_id
+    s9 POP
+    s10 POP	//  msg_value my_balance op sender_address query_id last_fill_up_time index collection_address owner_address content domain auction
+    s9 PUSH
+    1322339173 PUSHINT	//  msg_value my_balance op sender_address query_id last_fill_up_time index collection_address owner_address content domain auction op _267=1322339173
+    EQUAL	//  msg_value my_balance op sender_address query_id last_fill_up_time index collection_address owner_address content domain auction _268
+    IFJMP:<{	//  msg_value my_balance op sender_address query_id last_fill_up_time index collection_address owner_address content domain auction
+      s9 POP	//  msg_value my_balance auction sender_address query_id last_fill_up_time index collection_address owner_address content domain
+      NOW	//  msg_value my_balance auction sender_address query_id last_fill_up_time index collection_address owner_address content domain _270
+      s0 s6 XCHG2	//  msg_value my_balance auction sender_address query_id domain index collection_address owner_address content _270 last_fill_up_time
+      SUB	//  msg_value my_balance auction sender_address query_id domain index collection_address owner_address content _271
+      31622400 PUSHINT	//  msg_value my_balance auction sender_address query_id domain index collection_address owner_address content _271 _272=31622400
+      GREATER	//  msg_value my_balance auction sender_address query_id domain index collection_address owner_address content _273
+      s0 s8 XCHG	//  msg_value my_balance _273 sender_address query_id domain index collection_address owner_address content auction
+      ISNULL	//  msg_value my_balance _273 sender_address query_id domain index collection_address owner_address content _274
+      s1 s8 XCHG	//  msg_value my_balance content sender_address query_id domain index collection_address owner_address _273 _274
+      AND	//  msg_value my_balance content sender_address query_id domain index collection_address owner_address _275
       414 THROWIFNOT
-      s3 PUSH	//  msg_value my_balance query_id sender_address content domain index collection_address owner_address domain
-      CTOS	//  msg_value my_balance query_id sender_address content domain index collection_address owner_address _288
-      SBITS	//  msg_value my_balance query_id sender_address content domain index collection_address owner_address _289
-      NOW	//  msg_value my_balance query_id sender_address content domain index collection_address owner_address _289 _290
-      get_min_price CALLDICT	//  msg_value my_balance query_id sender_address content domain index collection_address owner_address min_price
-      s9 s(-1) PUXC	//  msg_value my_balance query_id sender_address content domain index collection_address owner_address msg_value min_price
-      GEQ	//  msg_value my_balance query_id sender_address content domain index collection_address owner_address _293
+      s3 PUSH	//  msg_value my_balance content sender_address query_id domain index collection_address owner_address domain
+      CTOS	//  msg_value my_balance content sender_address query_id domain index collection_address owner_address _278
+      SBITS	//  msg_value my_balance content sender_address query_id domain index collection_address owner_address _279
+      NOW	//  msg_value my_balance content sender_address query_id domain index collection_address owner_address _279 _280
+      get_min_price CALLDICT	//  msg_value my_balance content sender_address query_id domain index collection_address owner_address min_price
+      s9 s(-1) PUXC	//  msg_value my_balance content sender_address query_id domain index collection_address owner_address msg_value min_price
+      GEQ	//  msg_value my_balance content sender_address query_id domain index collection_address owner_address _283
       407 THROWIFNOT
-      s7 s8 XCPU	//  msg_value owner_address query_id sender_address content domain index collection_address my_balance msg_value
-      SUB	//  msg_value owner_address query_id sender_address content domain index collection_address balance_without_msg
-      1000000000 PUSHINT	//  msg_value owner_address query_id sender_address content domain index collection_address balance_without_msg _298
-      SUB	//  msg_value owner_address query_id sender_address content domain index collection_address amount_to_send
-      DUP	//  msg_value owner_address query_id sender_address content domain index collection_address amount_to_send amount_to_send
-      0 GTINT	//  msg_value owner_address query_id sender_address content domain index collection_address amount_to_send _301
-      IF:<{	//  msg_value owner_address query_id sender_address content domain index collection_address amount_to_send
+      s7 s8 XCPU	//  msg_value owner_address content sender_address query_id domain index collection_address my_balance msg_value
+      SUB	//  msg_value owner_address content sender_address query_id domain index collection_address balance_without_msg
+      1000000000 PUSHINT	//  msg_value owner_address content sender_address query_id domain index collection_address balance_without_msg _288
+      SUB	//  msg_value owner_address content sender_address query_id domain index collection_address amount_to_send
+      DUP	//  msg_value owner_address content sender_address query_id domain index collection_address amount_to_send amount_to_send
+      0 GTINT	//  msg_value owner_address content sender_address query_id domain index collection_address amount_to_send _291
+      IF:<{	//  msg_value owner_address content sender_address query_id domain index collection_address amount_to_send
         s2 s7 XCHG
         1322339173 PUSHINT
         ROT
-        s0 s7 XCHG
+        s0 s5 XCHG
         PUSHNULL
-        2 PUSHINT	//  msg_value index collection_address sender_address content domain owner_address amount_to_send _302=1322339173 query_id _303 _304=2
+        2 PUSHINT	//  msg_value index content sender_address collection_address domain owner_address amount_to_send _292=1322339173 query_id _293 _294=2
         send_msg INLINECALLDICT
       }>ELSE<{
         DROP
-        s5 POP
-        s5 POP	//  msg_value index collection_address sender_address content domain
-      }>	//  max_bid_amount index collection_address max_bid_address content domain
-      NOW	//  max_bid_amount index collection_address max_bid_address content domain _306
-      604800 PUSHINT	//  max_bid_amount index collection_address max_bid_address content domain _306 _307=604800
-      ADD	//  max_bid_amount index collection_address max_bid_address content domain auction_end_time
-      zero_address CALLDICT	//  max_bid_amount index collection_address max_bid_address content domain auction_end_time owner_address
-      s4 s7 s7 XCHG3	//  owner_address index collection_address domain content max_bid_address max_bid_amount auction_end_time
-      pack_auction CALLDICT	//  owner_address index collection_address domain content auction
-      s4 s5 XCHG
-      s3 s4 XCHG
-      s1 s2 XCHG
-      NOW	//  index collection_address owner_address content domain auction _311
+        s3 POP
+        s5 POP	//  msg_value index content sender_address collection_address domain
+      }>	//  max_bid_amount index content max_bid_address collection_address domain
+      NOW	//  max_bid_amount index content max_bid_address collection_address domain _296
+      604800 PUSHINT	//  max_bid_amount index content max_bid_address collection_address domain _296 _297=604800
+      ADD	//  max_bid_amount index content max_bid_address collection_address domain auction_end_time
+      zero_address CALLDICT	//  max_bid_amount index content max_bid_address collection_address domain auction_end_time owner_address
+      s4 s7 s7 XCHG3	//  owner_address index content domain collection_address max_bid_address max_bid_amount auction_end_time
+      pack_auction CALLDICT	//  owner_address index content domain collection_address auction
+      s1 s4 XCHG
+      s1 s5 XCHG
+      s3 s3 s0 XCHG3
+      NOW	//  index collection_address owner_address content domain auction _301
       store_data CALLDICT
-    }>	//  msg_value my_balance query_id sender_address op last_fill_up_time index collection_address owner_address content domain auction
+    }>	//  msg_value my_balance op sender_address query_id last_fill_up_time index collection_address owner_address content domain auction
     4 BLKDROP
     s2 POP
     s5 POP
-    s5 POP	//  collection_address index query_id sender_address op
-    0x2fcb26a2 PUSHINT	//  collection_address index query_id sender_address op _313
-    EQUAL	//  collection_address index query_id sender_address _314
+    s5 POP	//  collection_address index op sender_address query_id
+    0x2fcb26a2 PUSHINT	//  collection_address index op sender_address query_id _303
+    s1 s3 XCHG	//  collection_address index query_id sender_address op _303
+    EQUAL	//  collection_address index query_id sender_address _304
     IFJMP:<{	//  collection_address index query_id sender_address
-      0 PUSHINT	//  collection_address index query_id sender_address _315=0
-      0x8b771735 PUSHINT	//  collection_address index query_id sender_address _315=0 _316
+      0 PUSHINT	//  collection_address index query_id sender_address _305=0
+      0x8b771735 PUSHINT	//  collection_address index query_id sender_address _305=0 _306
       s0 s4 XCHG
-      NEWC	//  collection_address _316 query_id sender_address _315=0 index _317
-      256 STU	//  collection_address _316 query_id sender_address _315=0 _319
-      s0 s5 XCHG2	//  _315=0 _316 query_id sender_address _319 collection_address
-      STSLICER	//  _315=0 _316 query_id sender_address _320
+      NEWC	//  collection_address _306 query_id sender_address _305=0 index _307
+      256 STU	//  collection_address _306 query_id sender_address _305=0 _309
+      s0 s5 XCHG2	//  _305=0 _306 query_id sender_address _309 collection_address
+      STSLICER	//  _305=0 _306 query_id sender_address _310
       s1 s4 XCHG
       s3 s3 s0 XCHG3
-      64 PUSHINT	//  sender_address _315=0 _316 query_id _320 _321=64
+      64 PUSHINT	//  sender_address _305=0 _306 query_id _310 _311=64
       send_msg INLINECALLDICT
     }>	//  collection_address index query_id sender_address
     4 BLKDROP	// 
-    16 PUSHPOW2DEC	//  _323=65535
+    16 PUSHPOW2DEC	//  _313=65535
     THROWANY
   }>
   get_nft_data PROC:<{

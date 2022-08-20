@@ -105,21 +105,19 @@ slice calculate_nft_item_address(int wc, cell state_init) {
         throw_unless(204, (msg_value >= min_price) | deploy_without_auction);
 
         int item_index = slice_hash(domain);
-
-        cell config_cell = config_param(dns_config_id);
-        if (~ cell_null?(config_cell)) {
-            slice config_cs = config_cell.begin_parse();
-            cell config = config_cs~load_dict();
-            (slice config_value, int found) = config.udict_get?(256, item_index);
-            throw_if(205, found);
-        }
-
         cell nft_content = begin_cell()
                 .store_slice(sender_address)
                 .store_ref(begin_cell().store_slice(domain).end_cell())
                 .store_int(deploy_without_auction, 1)
                 .end_cell();
         deploy_nft_item(item_index, nft_item_code, nft_content);
+        return ();
+    }
+
+    if (op == op::process_governance_decision) {
+        throw_unless(405, equal_slices(owner_address, sender_address));
+        slice domain_address = in_msg_body~load_msg_addr();
+        send_msg(domain_address, 0, op::process_governance_decision, cur_lt(), begin_cell().store_slice(in_msg_body), 64);
         return ();
     }
 
