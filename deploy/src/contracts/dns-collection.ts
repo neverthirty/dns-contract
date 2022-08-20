@@ -23,7 +23,7 @@ class DnsCollection extends TonWeb["Contract"] {
 
     private createRoyaltyCell(): Cell {
         const royaltyCell = new Builder();
-        royaltyCell.storeUint(4, 16);
+        royaltyCell.storeUint(40, 16);
         royaltyCell.storeUint(1000, 16);
         royaltyCell.storeAddress(Address.parse((this.options as any).ownerAddress));
         return royaltyCell.endCell();

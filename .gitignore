@@ -3,5 +3,6 @@
 func/test.fif
 func/compiled.fif
 deploy/node_modules/
+deploy/dist/
 deploy/mnemonic.txt
 deploy/domains.txt
