@@ -1,6 +1,6 @@
 node test/root.js &&
 node test/collection.js &&
-node test/collection-config.js &&
+#node test/collection-config.js &&
 #node test/collection-get.js &&
 node test/item.js &&
 node test/item-already-init.js &&

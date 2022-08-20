@@ -55,31 +55,16 @@ funcer({'logVmOps': false, 'logFiftCode': false}, {
     'path': './func/',
     'fc': FC_ITEM,
     'data': makeStorageItemComplete({}),
-    "configParams": {
-        80: [
-            'cell', [
-                "uint256->cell", {
-                    '38930916800118655128984401856443062677799436388671332167772672007419684920584': [
-                        'uint8', 0,
-                        'Address', '0:' + USER_ADDRESS, // new_owner_address
-                        'uint2', 0, // response_address
-                        'uint1', 0, // custom_payload
-                        'coins', 0.5 * TON, // forward_amount
-                        'uint1', 0 // forward_payload
-                    ]
-                }
-            ]
-        ]
-    },
     'in_msgs': [
         {
             "time": 1658151331,
-            "sender": '0:' + USER_ADDRESS,
+            "sender": '0:' + COLLECTION_ADDRESS,
             "contract_balance": 1000 * TON,
             "amount": 1 * TON,
             "body": [
                 "uint32", 11,
                 "uint64", 123,
+                "uint2", 1,
             ],
             "new_data": makeStorageItem2({}),
             "out_msgs": [
