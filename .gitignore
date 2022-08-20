@@ -2,3 +2,4 @@
 *.iml
 func/test.fif
 func/compiled.fif
+*node_modules/*
