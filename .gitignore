@@ -2,4 +2,6 @@
 *.iml
 func/test.fif
 func/compiled.fif
-*node_modules/*
+deploy/node_modules/
+deploy/mnemonic.txt
+deploy/domains.txt
