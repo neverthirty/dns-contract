@@ -11,6 +11,7 @@ const {
     YEAR,
     FC_ITEM,
     makeStorageItemComplete,
+    makeStorageItemCompleteFrozen,
     makeStorageItem, AUCTION_START_TIME
 } = require("./utils");
 
@@ -27,22 +28,29 @@ funcer({'logVmOps': false, 'logFiftCode': false}, {
             "body": [
                 "uint32", 0x44beae41,
                 "uint64", 123,
-                "uint2", 1,
+                "int1", -1,
             ],
-            "new_data": makeStorageItemComplete({}),
-            "out_msgs": [
-                {
-                    "type": "Internal",
-                    "to": "0:" + COLLECTION_ADDRESS,
-                    "amount": 0,
-                    "sendMode": 128 + 32,
-                    "body": [
-                        "uint32", 0x370fec51, // op
-                        "uint64", 123, // query_id
-                    ],
-                },
-            ]
+            "new_data": makeStorageItemCompleteFrozen({}),
         },
-        ]
+    ]
 });
 
+funcer({'logVmOps': false, 'logFiftCode': false}, {
+    'path': './func/',
+    'fc': FC_ITEM,
+    'data': makeStorageItemCompleteFrozen({}),
+    'in_msgs': [
+        {
+            "time": AUCTION_START_TIME,
+            "sender": '0:' + COLLECTION_ADDRESS,
+            "contract_balance": 1000 * TON,
+            "amount": 1 * TON,
+            "body": [
+                "uint32", 0x44beae41,
+                "uint64", 123,
+                "int1", 0,
+            ],
+            "new_data": makeStorageItemComplete({}),
+        },
+    ]
+});

@@ -1,6 +1,6 @@
 const {funcer} = require("./funcer");
 const {
-    makeStorageCollection, FC_COLLECTION, TON,  COLLECTION_ADDRESS, AUCTION_START_TIME, USER_ADDRESS,
+    makeStorageCollection, FC_COLLECTION, TON,  COLLECTION_ADDRESS, AUCTION_START_TIME, USER_ADDRESS, OWNER_ADDRESS,
 } = require("./utils");
 
 const storage = () => {
@@ -10,17 +10,6 @@ const storage = () => {
 funcer({'logVmOps': false, 'logFiftCode': false}, {
     'path': './func/',
     'fc': FC_COLLECTION,
-    "configParams": {
-        81: [
-            'cell', [
-                "uint256->cell", {
-                    '38930916800118655128984401856443062677799436388671332167772672007419684920584': [
-                        'uint8', 1
-                    ]
-                }
-            ]
-        ]
-    },
     'data': storage(),
     'in_msgs': [
         {
@@ -28,22 +17,24 @@ funcer({'logVmOps': false, 'logFiftCode': false}, {
             "sender": '0:' + USER_ADDRESS,
             "amount": 1000 * TON,
             "body": [
-                'uint32', 0,
-                'string', "alice",
+                "uint32", 0x44beae41,
+                "address", '0:' + USER_ADDRESS,
+                "int1", -1
             ],
             "new_data": storage(),
-            "exit_code": 205
+            "exit_code": 405
         },
         {
             "time": AUCTION_START_TIME + 1,
-            "sender": '0:' + USER_ADDRESS,
+            "sender": '0:' + OWNER_ADDRESS,
             "amount": 1000 * TON,
             "body": [
-                'uint32', 0,
-                'string', "alice2",
+                "uint32", 0x44beae41,
+                "address", '0:' + USER_ADDRESS,
+                "int1", -1
             ],
             "new_data": storage(),
-            "exit_code": 0
+            "exit_code": 0,
         },
     ]
 });

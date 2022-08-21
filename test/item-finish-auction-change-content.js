@@ -39,7 +39,8 @@ const makeStorageItem2 = ({auctionEndTime}) => {
             'string', 'alice',
         ],
         'uint1', 0, // auction maybe
-        'uint64', AUCTION_START_TIME + 1 // last_fill_up_time
+        'uint64', AUCTION_START_TIME + 1, // last_fill_up_time
+        'int1', 0
     ];
 }
 

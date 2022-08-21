@@ -29,7 +29,8 @@ const makeStorageItem2 = ({auctionEndTime}) => {
             'coins', 20000 * TON, // max_bid_amount
             'uint64', (AUCTION_START_TIME + AUCTION_START_DURATION) // auction_end_time
         ],
-        'uint64', AUCTION_START_TIME // last_fill_up_time
+        'uint64', AUCTION_START_TIME, // last_fill_up_time
+        'int1', 0
     ];
 }
 

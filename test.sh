@@ -1,13 +1,12 @@
 node test/root.js &&
 node test/collection.js &&
-#node test/collection-config.js &&
+node test/collection-freeze.js &&
 #node test/collection-get.js &&
 node test/item.js &&
 node test/item-already-init.js &&
 node test/item-bid.js &&
 node test/item-bid-prolong.js &&
-node test/item-config.js &&
-#node test/item-config-transfer.js &&
+node test/item-freeze.js &&
 node test/item-delete-record.js &&
 node test/item-edit-record.js &&
 node test/item-fill-up.js &&

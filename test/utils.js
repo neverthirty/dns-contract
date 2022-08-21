@@ -121,7 +121,8 @@ const makeStorageItem = ({auctionEndTime, lastFillUpTime}) => {
             'coins', 1000 * TON, // max_bid_amount
             'uint64', auctionEndTime || (AUCTION_START_TIME + AUCTION_START_DURATION) // auction_end_time
         ],
-        'uint64', lastFillUpTime || AUCTION_START_TIME // last_fill_up_time
+        'uint64', lastFillUpTime || AUCTION_START_TIME, // last_fill_up_time,
+        'int1', 0
     ];
 }
 
@@ -135,7 +136,23 @@ const makeStorageItemComplete = ({auctionEndTime, lastFillUpTime}) => {
             'string', 'alice',
         ],
         'uint1', 0, // auction maybe
-        'uint64', lastFillUpTime || AUCTION_START_TIME // last_fill_up_time
+        'uint64', lastFillUpTime || AUCTION_START_TIME, // last_fill_up_time
+        'int1', 0
+    ];
+}
+
+const makeStorageItemCompleteFrozen = ({auctionEndTime, lastFillUpTime}) => {
+    return [
+        "uint256", '38930916800118655128984401856443062677799436388671332167772672007419684920584', // index,
+        "Address", '0:' + COLLECTION_ADDRESS, // collection_address
+        "Address", '0:' + OWNER_ADDRESS, // owner_address
+        'cell', CONTENT_EMPTY,
+        'cell', [ // domain
+            'string', 'alice',
+        ],
+        'uint1', 0, // auction maybe
+        'uint64', lastFillUpTime || AUCTION_START_TIME, // last_fill_up_time
+        'int1', -1
     ];
 }
 
@@ -159,6 +176,7 @@ module.exports = {
     makeStorageItem,
     makeStorageItemNonInit,
     makeStorageItemComplete,
+    makeStorageItemCompleteFrozen,
     AUCTION_START_TIME,
     CONTENT,
     CONTENT_EMPTY
