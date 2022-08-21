@@ -44,22 +44,30 @@ function getDomains(): string[] {
     return (fs.readFileSync("./domains.txt", 'ascii') as any).replaceAll('\r', "").replaceAll(' ', "").split('\n')
 }
 
-function getApiKey() {
-    return "0759c0449dbb10a49c53851e7f27ed2f216ca8b10226a018fe3f0530cc6e297a";
-}
-
 function getDnsCollectionInfo(): string {
     return "https://tonnames.org/dns-collection-vip.json";
+}
+
+function getProvider() {
+    /*
+    return new TonWeb.HttpProvider('https://toncenter.com/api/v2/jsonRPC', {
+        apiKey: "0759c0449dbb10a49c53851e7f27ed2f216ca8b10226a018fe3f0530cc6e297a"
+    });    
+    */
+
+    return new TonWeb.HttpProvider('https://testnet.toncenter.com/api/v2/jsonRPC', {
+        apiKey: "74211e8d7b8ca24018b28989228223fd5ca2c1ece53e679c3d51af88c976c4e7"
+    });   
 }
 
 const Utils = {
     getKeyPair,
     getWallet,
-    getApiKey,
     getDomains,
     getMnemonic,
     getHighloadWallet,
-    getDnsCollectionInfo
+    getDnsCollectionInfo,
+    getProvider
 }
 
 export { Utils }

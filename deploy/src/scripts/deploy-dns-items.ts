@@ -3,9 +3,7 @@ import { Mnemonic, BOC, Address, Coins, Builder} from 'ton3';
 import { DnsCollection } from "../contracts/dns-collection";
 import { Utils } from "../utils/utils"
 
-const tonwebProvider = new TonWeb.HttpProvider('https://toncenter.com/api/v2/jsonRPC', {
-    apiKey: Utils.getApiKey()
-});
+const tonwebProvider = Utils.getProvider();
 
 (async () => {
     const domains = Utils.getDomains();

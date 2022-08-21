@@ -38,14 +38,14 @@ const makeStorageItemComplete3 = ({auctionEndTime, lastFillUpTime}) => {
 funcer({'logVmOps': false, 'logFiftCode': false}, {
     'path': './func/',
     'fc': FC_ITEM,
-    'data': makeStorageItemComplete2({}),
+    'data': makeStorageItemComplete3({}),
     'in_msgs': [
         {
             "time": AUCTION_START_TIME + 1,
             "sender": '0:' + OWNER_ADDRESS,
             "amount": 1000 * TON,
             "body": [],
-            "new_data": makeStorageItemComplete2({
+            "new_data": makeStorageItemComplete3({
                 lastFillUpTime: AUCTION_START_TIME + 1
             }),
             "out_msgs": []
@@ -60,17 +60,14 @@ funcer({'logVmOps': false, 'logFiftCode': false}, {
             ],
             "output": [
                 ["int", 8],
-                ['cell', [
-                    'uint8', 0,
-                    'string', 'alice.ton'
-                ]]
+                ['null']
             ]
         },
         {
             "name": "is_frozen",
             "args": [],
             "output": [
-                ["int", 0],
+                ["int", -1],
             ]
         }
     ]

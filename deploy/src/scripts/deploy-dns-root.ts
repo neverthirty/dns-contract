@@ -4,9 +4,7 @@ import { DnsCollection } from "../contracts/dns-collection";
 import { DnsRoot } from "../contracts/dns-root";
 import { Utils } from "../utils/utils"
 
-const tonwebProvider = new TonWeb.HttpProvider('https://toncenter.com/api/v2/jsonRPC', {
-    apiKey: Utils.getApiKey()
-});
+const tonwebProvider = Utils.getProvider();
 
 (async () => {
     const mnemonic = new Mnemonic(Utils.getMnemonic());

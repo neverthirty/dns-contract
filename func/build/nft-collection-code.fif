@@ -175,7 +175,7 @@ PROGRAM{
     1000000000 PUSHINT	//  now_time start_min_price end_min_price _9=1000000000
     MUL	//  now_time start_min_price end_min_price
     s0 s2 XCHG
-    1660986000 PUSHINT	//  end_min_price start_min_price now_time _12=1660986000
+    1661331600 PUSHINT	//  end_min_price start_min_price now_time _12=1661331600
     SUB	//  end_min_price start_min_price seconds
     2592000 PUSHINT	//  end_min_price start_min_price seconds _15=2592000
     DIV	//  end_min_price start_min_price months
@@ -337,7 +337,7 @@ PROGRAM{
       }>
       NOW	//  msg_value sender_address nft_item_code in_msg_body deploy_without_auction now_time
       DUP
-      1660986000 PUSHINT	//  msg_value sender_address nft_item_code in_msg_body deploy_without_auction now_time now_time _40=1660986000
+      1661331600 PUSHINT	//  msg_value sender_address nft_item_code in_msg_body deploy_without_auction now_time now_time _40=1661331600
       GREATER	//  msg_value sender_address nft_item_code in_msg_body deploy_without_auction now_time _41
       s2 PUSH	//  msg_value sender_address nft_item_code in_msg_body deploy_without_auction now_time _41 deploy_without_auction
       OR	//  msg_value sender_address nft_item_code in_msg_body deploy_without_auction now_time _42

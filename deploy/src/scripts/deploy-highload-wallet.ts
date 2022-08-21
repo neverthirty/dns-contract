@@ -2,9 +2,7 @@ import TonWeb from "tonweb";
 import { Mnemonic, BOC } from 'ton3';
 import { Utils } from "../utils/utils";
 
-const tonwebProvider = new TonWeb.HttpProvider('https://toncenter.com/api/v2/jsonRPC', {
-    apiKey: Utils.getApiKey()
-});
+const tonwebProvider = Utils.getProvider();
 
 (async () => {
     const mnemonic = new Mnemonic(Utils.getMnemonic());
