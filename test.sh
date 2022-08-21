@@ -7,6 +7,7 @@ node test/item-already-init.js &&
 node test/item-bid.js &&
 node test/item-bid-prolong.js &&
 node test/item-freeze.js &&
+node test/item-freeze-2.js &&
 node test/item-delete-record.js &&
 node test/item-edit-record.js &&
 node test/item-fill-up.js &&

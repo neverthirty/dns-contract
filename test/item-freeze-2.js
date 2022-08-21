@@ -18,7 +18,7 @@ const {
 funcer({'logVmOps': false, 'logFiftCode': false}, {
     'path': './func/',
     'fc': FC_ITEM,
-    'data': makeStorageItemComplete({}),
+    'data': makeStorageItemCompleteFrozen({}),
     'in_msgs': [
         {
             "time": AUCTION_START_TIME,
@@ -28,21 +28,9 @@ funcer({'logVmOps': false, 'logFiftCode': false}, {
             "body": [
                 "uint32", 0x44beae41,
                 "uint64", 123,
-                "int1", -1,
+                "int1", 0,
             ],
-            "new_data": makeStorageItemCompleteFrozen({}),
-        },
-        {
-            "time": AUCTION_START_TIME,
-            "sender": '0:' + USER_ADDRESS,
-            "contract_balance": 1000 * TON,
-            "amount": 1 * TON,
-            "body": [
-                "uint32", 0x44beae41,
-                "uint64", 123,
-                "int1", -1,
-            ],
-            "exit_code": 410,
+            "new_data": makeStorageItemComplete({}),
         },
     ]
 });
