@@ -7,8 +7,6 @@
 ;;           royalty_info:^Cell
 ;;           = Storage;
 
-int min_tons_for_storage() asm "3000000000 PUSHINT"; ;; 3 TON
-
 (slice, cell, cell, cell) load_data() inline {
     var ds = get_data().begin_parse();
     return (
@@ -55,22 +53,6 @@ slice calculate_nft_item_address(int wc, cell state_init) {
     send_raw_message(msg.end_cell(), 64); ;; carry all the remaining value of the inbound message, fee deducted from amount
 }
 
-() send_msg(slice to_address, int amount, int op, int query_id, builder payload, int send_mode) impure inline {
-    var msg = begin_cell()
-            .store_uint(0x10, 6) ;; nobounce - int_msg_info$0 ihr_disabled:Bool bounce:Bool bounced:Bool src:MsgAddress -> 010000
-            .store_slice(to_address)
-            .store_coins(amount)
-            .store_uint(0, 1 + 4 + 4 + 64 + 32 + 1 + 1)
-            .store_uint(op, 32)
-            .store_uint(query_id, 64);
-
-    if (~ builder_null?(payload)) {
-        msg = msg.store_builder(payload);
-    }
-
-    send_raw_message(msg.end_cell(), send_mode);
-}
-
 () recv_internal(int msg_value, cell in_msg_full, slice in_msg_body) impure {
     if (in_msg_body.slice_empty?()) { ;; bounce back empty messages
         throw(0xffff);
@@ -87,14 +69,9 @@ slice calculate_nft_item_address(int wc, cell state_init) {
 
     var (owner_address, content, nft_item_code, royalty_info) = load_data();
 
-    if ((op == 0) | (op == 1)) { ;; deploy new nft
-        int deploy_without_auction = (op == 1);
-        if (deploy_without_auction) {
-            throw_unless(405, equal_slices(owner_address, sender_address));
-        }
-
+    if (op == 0) { ;; deploy new nft
         int now_time = now();
-        throw_unless(199, (now_time > auction_start_time) | deploy_without_auction); ;; start of auction
+        throw_unless(199, now_time > auction_start_time); ;; start of auction
         slice domain = read_domain_from_comment(in_msg_body);
         int len = slice_bits(domain);
         throw_unless(200, len > 0); ;; minimum 1 characters
@@ -102,32 +79,44 @@ slice calculate_nft_item_address(int wc, cell state_init) {
         throw_unless(202, mod(len, 8) == 0);
         throw_unless(203, check_domain_string(domain));
         int min_price = get_min_price(len, now_time);
-        throw_unless(204, (msg_value >= min_price) | deploy_without_auction);
+        throw_unless(204, msg_value >= min_price);
 
         int item_index = slice_hash(domain);
         cell nft_content = begin_cell()
+                .store_uint(1, 32) ;; op
                 .store_slice(sender_address)
                 .store_ref(begin_cell().store_slice(domain).end_cell())
-                .store_int(deploy_without_auction, 1)
+                .store_int(0, 1)
                 .end_cell();
         deploy_nft_item(item_index, nft_item_code, nft_content);
         return ();
     }
 
-    if (op == op::process_governance_decision) {
+    if (op == 1) { ;; admin request
         throw_unless(405, equal_slices(owner_address, sender_address));
-        slice domain_address = in_msg_body~load_msg_addr();
-        send_msg(domain_address, 0, op::process_governance_decision, cur_lt(), begin_cell().store_slice(in_msg_body), 64);
+
+        int mode = in_msg_body~load_uint(8);
+        cell msg = in_msg_body~load_ref();
+
+        send_raw_message(msg, mode);
+        return ();
+    }
+
+    if (op == 3) { ;; change owner
+        throw_unless(405, equal_slices(owner_address, sender_address));
+
+        slice new_owner = in_msg_body~load_msg_addr();
+        save_data(new_owner, content, nft_item_code, royalty_info);
+        return ();
+    }
+    if (op == 4) { ;; change content
+        throw_unless(405, equal_slices(owner_address, sender_address));
+
+        save_data(owner_address, in_msg_body~load_ref(), nft_item_code, in_msg_body~load_ref());
         return ();
     }
 
     if (op == op::fill_up) { ;; fill-up balance
-        int my_balance = pair_first(get_balance());
-        int amount_to_send = my_balance - min_tons_for_storage();
-        if (amount_to_send > 0) {
-            send_msg(owner_address, amount_to_send, op::fill_up, cur_lt(), null(), 0); ;; pay transfer fees separately
-        }
-
         return ();
     }
     throw(0xffff);
@@ -156,8 +145,20 @@ cell get_nft_content(int index, cell individual_nft_content) method_id {
     int starts_with_zero_byte = subdomain.preload_int(8) == 0;
 
     if (starts_with_zero_byte & (slice_bits(subdomain) == 8)) { ;; "." requested
-        return (8, null());  ;; resolved but no dns-records
+
+        var (_, content, _, _) = load_data();
+        slice cs = content.begin_parse();
+        throw_unless(412, cs~load_uint(8) == 0); ;; data onchain tag
+        cell keyvalue_map = cs~load_dict();
+
+        if (category == 0) { ;;  all categories are requested
+            return (8, keyvalue_map);
+        }
+
+        (cell value, int found) = keyvalue_map.udict_get_ref?(256, category);
+        return (8, value);
     }
+
     if (starts_with_zero_byte) {
         subdomain~load_uint(8);
     }

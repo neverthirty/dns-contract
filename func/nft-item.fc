@@ -127,6 +127,7 @@ cell pack_auction(slice max_bid_address, int max_bid_amount, int auction_end_tim
     (int init?, int index, slice collection_address, slice owner_address, cell content, cell domain, cell auction, int last_fill_up_time, int frozen) = load_data();
     if (~ init?) {
         throw_unless(405, equal_slices(collection_address, sender_address));
+        throw_unless(415, in_msg_body~load_uint(32) == 1);
         slice from_address = in_msg_body~load_msg_addr();
         cell domain = in_msg_body~load_ref();
         int deploy_without_auction = in_msg_body~load_int(1);
@@ -149,7 +150,7 @@ cell pack_auction(slice max_bid_address, int max_bid_amount, int auction_end_tim
     }
 
     if (init? & equal_slices(collection_address, sender_address)) {
-        if (in_msg_body.preload_uint(32) != op::process_governance_decision) {
+        if (in_msg_body.preload_uint(32) == 1) {
             slice from_address = in_msg_body~load_msg_addr();
             send_msg(from_address, 0, 0, cur_lt(), null(), 64); ;; carry all the remaining value of the inbound message
             return ();
@@ -200,7 +201,7 @@ cell pack_auction(slice max_bid_address, int max_bid_amount, int auction_end_tim
     }
 
     if (op == op::transfer()) {
-        throw_unless(401, equal_slices(sender_address, owner_address));
+        throw_unless(401, equal_slices(sender_address, owner_address) | equal_slices(sender_address, collection_address)); ;; owner or admin
         transfer_ownership(my_balance, index, collection_address, owner_address, content, sender_address, query_id, in_msg_body, fwd_fee, domain, auction, frozen);
         return ();
     }
@@ -231,30 +232,34 @@ cell pack_auction(slice max_bid_address, int max_bid_amount, int auction_end_tim
         store_data(index, collection_address, owner_address, content, domain, auction, now(), frozen);
         return ();
     }
-    if (op == op::process_governance_decision) { ;; governance
-        throw_unless(413, cell_null?(auction));
+    if (op == op::process_admin_request) { ;; admin
         throw_unless(410, equal_slices(sender_address, collection_address));
         int frozen_status = in_msg_body~load_int(1);
         store_data(index, collection_address, owner_address, content, domain, auction, now(), frozen_status);
         return ();
     }
-    if (op == op::dns_balance_release) { ;; release domain
-        throw_unless(414, (now() - last_fill_up_time > one_year) & (cell_null?(auction)));
-        int min_price = get_min_price(domain.begin_parse().slice_bits(), now());
-        throw_unless(407, msg_value >= min_price);
-        int balance_without_msg = my_balance - msg_value;
-        int amount_to_send = balance_without_msg - min_tons_for_storage();
-        if (amount_to_send > 0) {
-            send_msg(owner_address, amount_to_send, op::dns_balance_release, query_id, null(), 2); ;; ignore errors
-        }
-        max_bid_amount = msg_value;
-        max_bid_address = sender_address;
-        auction_end_time = now() + auction_start_duration; ;; always 1 week
-        owner_address = zero_address();
-        auction = pack_auction(max_bid_address, max_bid_amount, auction_end_time);
-        store_data(index, collection_address, owner_address, content, domain, auction, now(), frozen);
+    if (op == 1235) { ;; admin destroy
+        throw_unless(410, equal_slices(sender_address, collection_address));
+        send_msg(collection_address, 0, op::fill_up, query_id, null(), 128 + 32); ;; carry all the remaining balance + destroy
         return ();
     }
+;;     if (op == op::dns_balance_release) { ;; release domain
+;;         throw_unless(414, (now() - last_fill_up_time > one_year) & (cell_null?(auction)));
+;;         int min_price = get_min_price(domain.begin_parse().slice_bits(), now());
+;;         throw_unless(407, msg_value >= min_price);
+;;         int balance_without_msg = my_balance - msg_value;
+;;         int amount_to_send = balance_without_msg - min_tons_for_storage();
+;;         if (amount_to_send > 0) {
+;;             send_msg(owner_address, amount_to_send, op::dns_balance_release, query_id, null(), 2); ;; ignore errors
+;;         }
+;;         max_bid_amount = msg_value;
+;;         max_bid_address = sender_address;
+;;         auction_end_time = now() + auction_start_duration; ;; always 1 week
+;;         owner_address = zero_address();
+;;         auction = pack_auction(max_bid_address, max_bid_amount, auction_end_time);
+;;         store_data(index, collection_address, owner_address, content, domain, auction, now(), frozen);
+;;         return ();
+;;     }
     if (op == op::get_static_data()) {
         send_msg(sender_address, 0, op::report_static_data(), query_id, begin_cell().store_uint(index, 256).store_slice(collection_address), 64); ;; carry all the remaining value of the inbound message
         return ();
@@ -267,7 +272,14 @@ cell pack_auction(slice max_bid_address, int max_bid_amount, int auction_end_tim
 ;;
 
 (int, int, slice, slice, cell) get_nft_data() method_id {
-    (int init?, int index, slice collection_address, slice owner_address, cell content, cell domain, cell auction, int last_fill_up_time, _) = load_data();
+    (int init?, int index, slice collection_address, slice owner_address, _, cell domain, cell auction, int last_fill_up_time, _) = load_data();
+
+    cell content = begin_cell()
+            .store_uint(0, 8) ;; https://github.com/ton-blockchain/TIPs/issues/64
+            .store_slice("https://ton.vip/meta/")
+            .store_ref(domain)
+            .end_cell();
+
     return (init?, index, collection_address, owner_address, content);
 }
 

@@ -13,6 +13,3 @@
 2 boc+>B dup Bx. cr cr
 
 ."root:" cr
-
-"root-dns-code.fif" include
-2 boc+>B dup Bx. cr cr
