@@ -1,7 +1,7 @@
 const {funcer} = require("./funcer");
 const {
     makeStorageCollection, FC_COLLECTION, DNS_NEXT_RESOLVER_PREFIX,
-    TON, CONFIG_PARAMS, COLLECTION_ADDRESS, OWNER_ADDRESS, USER_ADDRESS
+    TON, CONFIG_PARAMS, COLLECTION_ADDRESS, OWNER_ADDRESS, USER_ADDRESS, AUCTION_START_TIME
 } = require("./utils");
 
 const storage = () => {
@@ -15,70 +15,37 @@ funcer({'logVmOps': false, 'logFiftCode': false}, {
     'data': storage(),
     'in_msgs': [
         {
-            "sender": '0:' + COLLECTION_ADDRESS,
-            "amount": 10 * TON,
-            "body": [],
-            // "new_data": storage,
-            "exit_code": 0xffff
-        },
-        {
+            "time": AUCTION_START_TIME + 1,
             "sender": '0:' + OWNER_ADDRESS,
-            "amount": 10 * TON,
+            "amount": 1000 * TON,
             "body": [
-                'uint32', 1,
-                'string', 'bob'
-            ],
-            // "new_data": storage,
-            "exit_code": 0
-        },
-        {
-            "sender": '0:' + COLLECTION_ADDRESS,
-            "amount": 10 * TON,
-            "body": [
-                'uint32', 0x370fec51
+                "uint32", "1",
+                "uint8", "1",
+                "cell", [
+
+                ]
             ],
             "new_data": storage(),
-            "exit_code": 0
-        },
+            "exit_code": 0,
+        }
     ],
     "get_methods": [
         {
             "name": "get_nft_content",
             "args": [
+                ["int", "256"],
                 ["cell", [ // content
-                    'uint8', 1,
-                    'string', 'https://ton.org/collection.json'
+                    'string', 'alice'
                 ]],
             ],
             "output": [
                 ["cell", [ // content
                     'uint8', 1,
-                    'string', 'https://ton.org/collection.json'
+                    'string', 'https://ton.vip/meta/alice.json'
                 ]],
             ]
         },
-        {
-            "name": "get_collection_data",
-            "args": [
-            ],
-            "output": [
-                ["int", 0],
-                ["cell", [ // content
-                    'uint8', 1,
-                    'string', 'https://ton.org/collection.json'
-                ]],
-                ["null", "null"]
-            ]
-        },
-        // {
-        //     "name": "get_nft_address_by_index",
-        //     "args": [
-        //         ["int", 1]
-        //     ],
-        //     "output": [
-        //         ["hashu", '63510023014831555397400702175474279292479092682101742919664604181945239950513'],
-        //     ]
-        // },
+        /*
         {
             "name": "dnsresolve",
             "args": [
@@ -122,6 +89,6 @@ funcer({'logVmOps': false, 'logFiftCode': false}, {
                 ["int", 6 * 8],
                 ["hashu", '63510023014831555397400702175474279292479092682101742919664604181945239950513']
             ]
-        },
+        },*/
     ]
 });

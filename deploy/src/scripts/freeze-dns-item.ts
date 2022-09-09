@@ -12,7 +12,8 @@ const tonwebProvider = Utils.getProvider();
     const walletAddress = wallet.address.toString();
 
     const dnsCollectionContract = new DnsCollection(tonwebProvider, {
-        infoUrl: Utils.getDnsCollectionInfo(),
+        collectionContentUri: Utils.collectionContentUri,
+        nftItemContentBaseUri: Utils.nftItemContentBaseUri,
         ownerAddress: walletAddress
     })
     const dnsCollectionContractAddress = (await dnsCollectionContract.getAddress()).toString(true, true, false, false);

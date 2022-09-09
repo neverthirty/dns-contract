@@ -13,6 +13,7 @@ funcer({'logVmOps': false, 'logFiftCode': false}, {
             "sender": '0:' + COLLECTION_ADDRESS,
             "amount": 1000 * TON,
             "body": [
+                "uint32", 1,
                 'Address', '0:' + USER_ADDRESS,
                 'cell', [
                     'string', 'alice'

@@ -12,7 +12,7 @@ funcer({'logVmOps': false, 'logFiftCode': false}, {
     'fc': FC_COLLECTION,
     'data': storage(),
     'in_msgs': [
-        {
+        /*{
             "time": AUCTION_START_TIME + 1,
             "sender": '0:' + USER_ADDRESS,
             "amount": 1000 * TON,
@@ -23,15 +23,17 @@ funcer({'logVmOps': false, 'logFiftCode': false}, {
             ],
             "new_data": storage(),
             "exit_code": 405
-        },
+        },*/
         {
             "time": AUCTION_START_TIME + 1,
             "sender": '0:' + OWNER_ADDRESS,
             "amount": 1000 * TON,
             "body": [
-                "uint32", 0x44beae41,
-                "address", '0:' + USER_ADDRESS,
-                "int1", -1
+                "uint32", "1",
+                "uint8", "1",
+                "cell", [
+
+                ]
             ],
             "new_data": storage(),
             "exit_code": 0,

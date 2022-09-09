@@ -13,7 +13,8 @@ const tonwebProvider = Utils.getProvider();
     const walletAddress = wallet.address.toString();
 
     const dnsCollectionContract = new DnsCollection(tonwebProvider, {
-        infoUrl: Utils.getDnsCollectionInfo(),
+        collectionContentUri: Utils.collectionContentUri,
+        nftItemContentBaseUri: Utils.nftItemContentBaseUri,
         ownerAddress: walletAddress
     })
     const dnsCollectionContractAddress = (await dnsCollectionContract.getAddress()).toString(true, true, false, false);
@@ -38,10 +39,13 @@ const tonwebProvider = Utils.getProvider();
     for (const group of grouped) {
         const transfers = [];
         for (const domain of group) {
+            const mintBody = await dnsCollectionContract.createMintBody(domain);
+            const requestBody = dnsCollectionContract.createAdminRequest(mintBody, 64);
+
             transfers.push({
                 destination: new Address(dnsCollectionContractAddress),
-                amount: new Coins('0.080'),
-                body: BOC.from(await (await dnsCollectionContract.createMintBody(domain, false)).toBoc())[0],
+                amount: new Coins('0.075'),
+                body: BOC.from(requestBody.toBoc().toString("hex"))[0],
                 mode: 1,
             })
         }

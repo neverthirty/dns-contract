@@ -316,6 +316,8 @@ const makeStackValue = (type, value) => {
         return 'null';
     } else if (type == "cell") {
         return makeCell(value);
+    } else if (type == "slice") {
+        return makeCell(value);
     } else if (type == "string") {
         return '<b "' + value + '" $, b> <s';
     } else if (type == "bytes") {
@@ -351,7 +353,9 @@ const makeOutputEntryCheck = (type, value) => {
         return makeStackValue(type, value) + ` 2= ` + check;
     } else if (type == "cell" || type === 'boc') {
         return ` hashu ` + makeStackValue(type, value) + ` hashu = ` + check;
-    }  else if (type == "hashu") {
+    } else if (type == "slice") {
+        return ` s>c hashu ` + makeStackValue(type, value) + ` hashu = ` + check;
+    } else if (type == "hashu") {
         return ` hashu ` + makeStackValue(type, value) + ` = ` + check;
     } else if (type == "null") {
         return ` null? ` + check;

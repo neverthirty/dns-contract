@@ -7,10 +7,8 @@
     "start": "tsc && node dist/index.js",
     "deploy_dns_root": "tsc && node dist/scripts/deploy-dns-root.js",
     "deploy_dns_collection": "tsc && node dist/scripts/deploy-dns-collection.js",
-    "deploy_dns_item": "tsc && node dist/scripts/deploy-dns-item.js",
     "deploy_dns_items": "tsc && node dist/scripts/deploy-dns-items.js",
     "deploy_wallet": "tsc && node dist/scripts/deploy-highload-wallet.js",
-    "freeze_dns_item": "tsc && node dist/scripts/freeze-dns-item.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
