@@ -47,7 +47,7 @@ class DnsCollection extends TonWeb["Contract"] {
 
     public async createMintBody(domain: string): Promise<Cell> {
         const collectionAddress = Address.parse((await this.getAddress()).toString());
-        const itemIndex = await TonWeb.utils.sha256(Buffer.from(domain, "ascii"));
+        const itemIndex = new Builder().storeBuffer(Buffer.from(domain, "ascii")).endCell().hash(); // await TonWeb.utils.sha256(Buffer.from(domain, "ascii"));
         const nftData = new Builder().storeBuffer(Buffer.from(itemIndex)).storeAddress(collectionAddress).endCell();
         const nftStateInit = new Builder()
             .storeUint(0, 2)
