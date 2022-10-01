@@ -2,7 +2,7 @@
 
 int min_tons_for_storage() asm "50000000 PUSHINT"; ;; 0.05 TON
 
-const auction_start_duration = 604800; ;; 1 week = 60 * 60 * 24 * 7; in testnet 5 min
+const auction_start_duration = 172800; ;; 2 days = 60 * 60 * 24 * 2; in testnet 5 min
 const auction_end_duration = 3600; ;; 1 hour = 60 * 60; in testnet 1 min
 const auction_prolongation = 3600; ;; 1 hour = 60 * 60; in testnet 1 min
 
