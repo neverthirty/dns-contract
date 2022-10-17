@@ -47,7 +47,7 @@ function getDomains(): string[] {
 function getProvider() {
     return new TonWeb.HttpProvider('https://toncenter.com/api/v2/jsonRPC', {
         apiKey: "0759c0449dbb10a49c53851e7f27ed2f216ca8b10226a018fe3f0530cc6e297a"
-    });    
+    });
 
     /*
     return new TonWeb.HttpProvider('https://testnet.toncenter.com/api/v2/jsonRPC', {
@@ -55,8 +55,8 @@ function getProvider() {
     });   */
 }
 
-const collectionContentUri = "https://tonnames.org/dns-collection-vip.json";
-const nftItemContentBaseUri = 'https://tonnames.org/dns-collection-vip-meta/';
+const collectionContentUri = "https://api.tonnames.org/nft/dns-vip-collection.json";
+const nftItemContentBaseUri = "https://api.tonnames.org/nft/dns-vip-item-";
 
 const Utils = {
     getKeyPair,
