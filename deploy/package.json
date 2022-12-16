@@ -9,7 +9,8 @@
     "deploy_dns_collection": "tsc && node dist/scripts/deploy-dns-collection.js",
     "deploy_dns_items": "tsc && node dist/scripts/deploy-dns-items.js",
     "deploy_wallet": "tsc && node dist/scripts/deploy-highload-wallet.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "destroy_dns_collections": "tsc && node dist/scripts/destroy-dns-collections.js"
   },
   "author": "",
   "license": "ISC",
