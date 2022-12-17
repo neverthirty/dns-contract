@@ -76,6 +76,16 @@ class DnsCollection extends TonWeb["Contract"] {
         return b.endCell();
         // return TonWebCell.fromBoc(b.endCell().toBoc().toString("hex"))[0];
     }
+
+    public async createDestroyCollectionBody (walletAddress: string) {
+        const b = new Builder();
+        b.storeUint(0x18, 6);
+        b.storeAddress(Address.parse(walletAddress));
+        b.storeCoins(0);
+        b.storeUint(0, 1 + 4 + 4 + 64 + 32 + 1 + 1 + 1);
+
+        return b.endCell();
+    }
 }
 
 export { DnsCollection, DNS_COLLECTION_CODE_HEX }
